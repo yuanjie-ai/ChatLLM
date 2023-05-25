@@ -7,7 +7,6 @@
 # @WeChat       : meutils
 # @Software     : PyCharm
 # @Description  :
-import pandas as pd
 
 from meutils.pipe import *
 from meutils.hash_utils import md5

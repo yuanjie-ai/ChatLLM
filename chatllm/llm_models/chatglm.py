@@ -1,11 +1,11 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 # @Project      : AI.  @by PyCharm
-# @File         : __init__.py
-# @Time         : 2023/4/21 11:54
+# @File         : chatglm
+# @Time         : 2023/5/19 17:55
 # @Author       : betterme
 # @WeChat       : meutils
 # @Software     : PyCharm
 # @Description  :
 
-from chatllm.parse_utils.doc_embedding import DocEmbedding
+from meutils.pipe import *

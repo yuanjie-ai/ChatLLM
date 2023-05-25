@@ -14,6 +14,7 @@ from typing import Dict, Tuple, Union, Optional
 from torch.nn import Module
 from transformers import AutoModel
 
+
 # os.environ["CUDA_VISIBLE_DEVICES"] = "0,1,2"
 
 def auto_configure_device_map(num_gpus: int) -> Dict[str, int]:
@@ -48,6 +49,7 @@ def auto_configure_device_map(num_gpus: int) -> Dict[str, int]:
 
 def load_chatglm_on_gpus(checkpoint_path: Union[str, os.PathLike], num_gpus: int = 2,
                          device_map: Optional[Dict[str, int]] = None, **kwargs) -> Module:
+    """https://github.com/THUDM/ChatGLM-6B#%E5%A4%9A%E5%8D%A1%E9%83%A8%E7%BD%B2"""
     if num_gpus < 2 and device_map is None:
         model = AutoModel.from_pretrained(checkpoint_path, trust_remote_code=True, **kwargs).half().cuda()
     else:
@@ -61,20 +63,3 @@ def load_chatglm_on_gpus(checkpoint_path: Union[str, os.PathLike], num_gpus: int
         model = dispatch_model(model, device_map=device_map)
 
     return model
-
-
-# def load_chatglm_on_gpus(model, model_name_or_path, num_gpus=2, checkpoint="chatglm_checkpoint"):
-#     """https://github.com/THUDM/ChatGLM-6B/issues/200"""
-#     from accelerate import load_checkpoint_and_dispatch
-#
-#     device_map = auto_configure_device_map(num_gpus)
-#     try:
-#         model = load_checkpoint_and_dispatch(model, model_name_or_path, device_map=device_map, offload_folder="offload",
-#                                              offload_state_dict=True).half()
-#     except ValueError:
-#         logger.info('多卡加载，第一次需要缓存模型')
-#         model.save_pretrained(checkpoint, max_shard_size='2GB')
-#         model = load_checkpoint_and_dispatch(model, checkpoint, device_map=device_map,
-#                                              offload_folder="offload", offload_state_dict=True).half()
-#     return model
-

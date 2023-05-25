@@ -7,7 +7,6 @@
 # @WeChat       : meutils
 # @Software     : PyCharm
 # @Description  :
-import os
 
 import torch
 from transformers import AutoTokenizer, AutoModel
@@ -28,7 +27,8 @@ else:
     MODEL_PATH = "THUDM/chatglm-6b"
 
 
-# todo 多卡 https://github.com/THUDM/ChatGLM-6B#%E5%A4%9A%E5%8D%A1%E9%83%A8%E7%BD%B2
+xgroup = Pipe(lambda ls, step=3, overlap_rate=0: [ls[max(idx - int(step * overlap_rate), 0): idx + step] for idx in
+                                                  range(0, len(ls), step)])
 
 def textsplitter(text, chunk_size=512, overlap_rate=0.2, sep=''):  # 简单粗暴
     return text.lower().split() | xjoin(sep) | xgroup(chunk_size, overlap_rate)
@@ -59,6 +59,9 @@ def load_llm4chat(model_name_or_path="THUDM/chatglm-6b", device=DEVICE, num_gpus
         return partial(model.stream_chat, tokenizer=tokenizer)  # 可以在每一次生成清GPU
     else:
         return partial(model.chat, tokenizer=tokenizer)
+
+
+
 
 
 if __name__ == '__main__':
