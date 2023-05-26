@@ -23,11 +23,9 @@ openai.api_base = 'https://api.openai-proxy.com/v1'
 openai.api_key = "sk-xx"  # supply your API key however you choose
 
 
-def create(prompt="1+1", stream=True, max_tokens=2048,  model="text-davinci-003"):
+def create(prompt="1+1", stream=True, max_tokens=2048, model="text-davinci-003"):
     completion = openai.Completion.create(model=model, prompt=prompt, stream=stream, max_tokens=max_tokens)
     if not stream:
         return completion.choices[0].text
     for c in completion:
         yield c.choices[0].text
-
-

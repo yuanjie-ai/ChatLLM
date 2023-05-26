@@ -10,10 +10,16 @@ https://ai.de1919.com/
 https://blog.csdn.net/weixin_45788869/article/details/130319005?csdn_share_tail=%7B%22type%22%3A%22blog%22%2C%22rType%22%3A%22article%22%2C%22rId%22%3A%22130319005%22%2C%22source%22%3A%22unlogin%22%7D
 
 增加bloom
-
 https://github.com/huggingface/transformers-bloom-inference
 https://huggingface.co/bigscience/bloom-560m
 
 
 提示模板
 https://github.com/f/awesome-chatgpt-prompts
+
+
+https://github.com/TheRamU/Fay
+
+
+# 赚钱
+https://github.com/xiaoming2028/Chatgpt-Makes-Money

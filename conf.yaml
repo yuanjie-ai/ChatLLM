@@ -1,5 +1,0 @@
-cachedir: pdf_cache
-encode_model: nghuyong/ernie-3.0-nano-zh
-llm: THUDM/chatglm-6b
-threshold: 0.66
-topk: 3
