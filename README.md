@@ -30,6 +30,28 @@ _ = list(qa(query='周杰伦是谁', knowledge_base='周杰伦是傻子', role='
 - 支持角色扮演
   ![img.png](data/imgs/role.png)
 
+## 无缝衔接Openai生态
+
+<details markdown="1">
+  <summary>Click to Openai生态</summary>
+
+- 一键启动UI
+
+```shell
+pip install "chatllm[openai]" && chatllm-run openai <本地模型地址>
+```
+```python
+import openai
+
+openai.api_base = 'http://0.0.0.0:8000/v1'
+openai.api_key = 'chatllm'
+prompt = "你好"
+completion = openai.Completion.create(prompt=prompt, stream=True, model="text-davinci-003")
+for c in completion:
+    print(c.choices[0].text, end='')
+# 你好👋!我是人工智能助手 ChatGLM-6B,很高兴见到你，欢迎问我任何问题。
+```
+
 ## ChatPDF
 
 <details markdown="1">

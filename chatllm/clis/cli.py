@@ -6,8 +6,7 @@
 # @Author       : yuanjie
 # @Email        : meutils@qq.com
 # @Software     : PyCharm
-# @Description  : python meutils/clis/__init__.py
-import os
+# @Description  :
 
 from meutils.pipe import *
 
@@ -23,7 +22,7 @@ def f(a=1, **kw):
 
 
 @cli.command(help="help")  # help会覆盖docstring
-def clitest(**kwargs): # 不支持 **kwargs
+def clitest(**kwargs):  # 不支持 **kwargs
     f(**kwargs)
 
 
@@ -46,6 +45,23 @@ def flask_api(model_name_or_path=None, host='127.0.0.1', port=8000, path='/'):
     qa = ChatBase()
     qa.load_llm4chat(model_name_or_path or MODEL_PATH)
     qa.run_serving(host, port, path)
+
+
+@cli.command()  # help会覆盖docstring
+def openapi(llm_model, host='127.0.0.1', port: int = 8000, debug='1'):
+    """
+        chatllm-run openapi <MODEL_PATH> --host 127.0.0.1 --port 8000
+    """
+
+    os.environ['LLM_MODEL'] = llm_model
+    os.environ['DEBUG'] = debug
+
+    from meutils.serving.fastapi import App
+    from chatllm.api.routes.api import router
+
+    app = App()
+    app.include_router(router)
+    app.run(host=host, port=port)
 
 
 if __name__ == '__main__':
