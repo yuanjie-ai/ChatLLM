@@ -12,8 +12,6 @@ version = time.strftime("%Y.%m.%d.%H.%M.%S", time.localtime())
 with open('README.md') as readme_file:
     readme = readme_file.read()
 
-with open('HISTORY.rst') as history_file:
-    history = history_file.read()
 
 get_requirements = lambda p='requirements.txt': pd.read_csv(p, comment='#', names=['name']).name.tolist()
 extras_require = {v.name.split('_')[1][:-4]: get_requirements(v) for v in DIR.glob('requirements_*')}
@@ -43,7 +41,7 @@ setup(
     install_requires=get_requirements(),
     extras_require=extras_require,  # pip install -U meutils\[all\]
     license="MIT license",
-    long_description=readme + '\n\n' + history,
+    long_description=readme,
     long_description_content_type="text/markdown",
     include_package_data=True,
     keywords='chatllm',
