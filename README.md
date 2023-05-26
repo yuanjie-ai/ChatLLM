@@ -30,10 +30,9 @@ _ = list(qa(query='周杰伦是谁', knowledge_base='周杰伦是傻子', role='
 - 支持角色扮演
   ![img.png](data/imgs/role.png)
 
-## 无缝衔接Openai生态
-
+## OpenaiEcosystem
 <details markdown="1">
-  <summary>Click to Openai生态</summary>
+  <summary>Click to 无缝对接openai生态</summary>
 
 ```shell
 # 服务端
