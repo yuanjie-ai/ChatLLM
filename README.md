@@ -58,15 +58,16 @@ for c in completion:
 <details markdown="1">
   <summary>Click to ChatPDF</summary>
 
-- 一键启动UI
 
 ```shell
+# 服务端
 pip install "chatllm[pdf]" && chatllm-run webui --name chatpdf
 ```
 
 - python交互
 
 ```python
+# 客户端
 from chatllm.applications.chatpdf import ChatPDF
 
 qa = ChatPDF(encode_model='nghuyong/ernie-3.0-nano-zh')
