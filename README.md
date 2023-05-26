@@ -35,12 +35,12 @@ _ = list(qa(query='周杰伦是谁', knowledge_base='周杰伦是傻子', role='
 <details markdown="1">
   <summary>Click to Openai生态</summary>
 
-- 一键启动UI
-
 ```shell
+# 服务端
 pip install "chatllm[openai]" && chatllm-run openai <本地模型地址>
 ```
 ```python
+# 客户端
 import openai
 
 openai.api_base = 'http://0.0.0.0:8000/v1'
@@ -60,14 +60,12 @@ for c in completion:
 
 
 ```shell
-# 服务端
 pip install "chatllm[pdf]" && chatllm-run webui --name chatpdf
 ```
 
 - python交互
 
 ```python
-# 客户端
 from chatllm.applications.chatpdf import ChatPDF
 
 qa = ChatPDF(encode_model='nghuyong/ernie-3.0-nano-zh')
