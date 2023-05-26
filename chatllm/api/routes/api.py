@@ -1,16 +1,19 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+# @Project      : AI.  @by PyCharm
+# @File         : api
+# @Time         : 2023/5/26 14:56
+# @Author       : betterme
+# @WeChat       : meutils
+# @Software     : PyCharm
+# @Description  :
+
+from meutils.pipe import *
 from fastapi import APIRouter
 
-from app.api.routes import authentication, comments, profiles, tags, users
-from app.api.routes.articles import api as articles
+from chatllm.api.routes import base, completions, embeddings
 
 router = APIRouter()
-router.include_router(authentication.router, tags=["authentication"], prefix="/users")
-router.include_router(users.router, tags=["users"], prefix="/user")
-router.include_router(profiles.router, tags=["profiles"], prefix="/profiles")
-router.include_router(articles.router, tags=["articles"])
-router.include_router(
-    comments.router,
-    tags=["comments"],
-    prefix="/articles/{slug}/comments",
-)
-router.include_router(tags.router, tags=["tags"], prefix="/tags")
+router.include_router(base.router, tags=["baseinfo"])
+router.include_router(completions.router, tags=["completions"])
+router.include_router(embeddings.router, tags=["embeddings"])

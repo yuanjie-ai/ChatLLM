@@ -26,9 +26,9 @@ if LOCAL_HOST.startswith('10.219'):
 else:
     MODEL_PATH = "THUDM/chatglm-6b"
 
-
 xgroup = Pipe(lambda ls, step=3, overlap_rate=0: [ls[max(idx - int(step * overlap_rate), 0): idx + step] for idx in
                                                   range(0, len(ls), step)])
+
 
 def textsplitter(text, chunk_size=512, overlap_rate=0.2, sep=''):  # 简单粗暴
     return text.lower().split() | xjoin(sep) | xgroup(chunk_size, overlap_rate)
@@ -59,9 +59,6 @@ def load_llm4chat(model_name_or_path="THUDM/chatglm-6b", device=DEVICE, num_gpus
         return partial(model.stream_chat, tokenizer=tokenizer)  # 可以在每一次生成清GPU
     else:
         return partial(model.chat, tokenizer=tokenizer)
-
-
-
 
 
 if __name__ == '__main__':
