@@ -7,9 +7,7 @@
 # @WeChat       : meutils
 # @Software     : PyCharm
 # @Description  :
-import dataclasses
 
-import pandas as pd
 
 from meutils.pipe import *
 from meutils.np_utils import cosine_topk
@@ -73,9 +71,9 @@ class ChatANN(ChatBase):
 if __name__ == '__main__':
 
     qa = ChatANN(encode_model="nghuyong/ernie-3.0-nano-zh")
-    qa.load_llm4chat(model_name_or_path="/Users/betterme/PycharmProjects/AI/CHAT_MODEL/chatglm")
+    qa.load_llm(model_name_or_path="/Users/betterme/PycharmProjects/AI/CHAT_MODEL/chatglm")
     qa.create_index(['周杰伦'] * 10)
 
-    for i, _ in qa(query='有几个周杰伦'):
-        pass
+    for i in qa(query='有几个周杰伦'):
+        print(i, end='')
     print(qa.recall)

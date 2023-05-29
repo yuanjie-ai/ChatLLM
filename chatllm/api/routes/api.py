@@ -17,3 +17,4 @@ router = APIRouter()
 router.include_router(base.router, tags=["baseinfo"])
 router.include_router(completions.router, tags=["completions"])
 router.include_router(embeddings.router, tags=["embeddings"])
+

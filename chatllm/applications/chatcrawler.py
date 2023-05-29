@@ -33,7 +33,7 @@ if __name__ == '__main__':
 
 
     qa = Crawler4QA()
-    qa.load_llm4chat(MODEL_PATH)
+    qa.load_llm(MODEL_PATH)
 
     list(qa(query='提取人名'))
 

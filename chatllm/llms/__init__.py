@@ -18,7 +18,7 @@ def load_llm4chat(model_name_or_path="THUDM/chatglm-6b", device='cpu', num_gpus=
             if p.stem in model_base:
                 model_base = p.stem
 
-    model_base = importlib.import_module(f"chatllm.llm_models.{model_base}")
+    model_base = importlib.import_module(f"chatllm.llms.{model_base}")
     return model_base.load_llm4chat(
         model_name_or_path=model_name_or_path,
         device=device,
