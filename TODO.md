@@ -23,3 +23,6 @@ https://github.com/TheRamU/Fay
 
 # 赚钱
 https://github.com/xiaoming2028/Chatgpt-Makes-Money
+
+#
+https://github.com/yuanzhoulvpi2017/zero_nlp

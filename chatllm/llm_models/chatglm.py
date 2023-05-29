@@ -16,7 +16,7 @@ from meutils.pipe import *
 from chatllm.utils.gpu_utils import load_chatglm_on_gpus
 
 
-def load_llm(model_name_or_path="THUDM/chatglm-6b", device='cpu', num_gpus=2, **kwargs):
+def load_llm(model_name_or_path="THUDM/chatglm-6b", device='cpu', num_gpus=2):
     model = AutoModel.from_pretrained(model_name_or_path, trust_remote_code=True)
     tokenizer = AutoTokenizer.from_pretrained(model_name_or_path, trust_remote_code=True)
 
@@ -38,13 +38,13 @@ def load_llm(model_name_or_path="THUDM/chatglm-6b", device='cpu', num_gpus=2, **
 def load_llm4chat(model_name_or_path="THUDM/chatglm-6b", device='cpu', num_gpus=2):
     model, tokenizer = load_llm(model_name_or_path, device, num_gpus)
 
-    def stream_chat(query, return_history=True, **chat_kwargs):
+    def stream_chat(query, history=None, return_history=True, **chat_kwargs):
         """
         for i in chat('1+1', return_history=False):
             print(i, end='')
         """
         idx = 0
-        for response, history in model.stream_chat(tokenizer=tokenizer, query=query, **chat_kwargs):
+        for response, history in model.stream_chat(tokenizer=tokenizer, query=query, history=history, **chat_kwargs):
             ret = response[idx:]
             if ret[-1:] == "\uFFFD":
                 continue
@@ -56,3 +56,8 @@ def load_llm4chat(model_name_or_path="THUDM/chatglm-6b", device='cpu', num_gpus=
                 yield ret
 
     return stream_chat
+
+
+if __name__ == '__main__':
+    for i in load_llm4chat('/Users/betterme/PycharmProjects/AI/CHAT_MODEL/chatglm')('你好', return_history=False):
+        print(i, end='')

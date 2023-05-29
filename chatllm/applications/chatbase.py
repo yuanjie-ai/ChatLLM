@@ -36,7 +36,7 @@ class ChatBase(object):
     def set_chat_kwargs(self, **kwargs):
         self.chat_func = partial(self.chat_func, **kwargs)
 
-    @clear_cuda_cache
+    @clear_cuda_cache(bins=3)
     def _qa(self, query, knowledge_base='', role='', max_turns=1):
         self.role = role or os.environ.get('LLM_ROLE', '')
         self.knowledge_base = str(knowledge_base).strip()
@@ -67,8 +67,27 @@ class ChatBase(object):
         # self.history_ = history  # 历史所有
         self.history += [[None, response]]  # 置空知识
 
-    def load_llm4chat(self, model_name_or_path="THUDM/chatglm-6b", device=DEVICE, stream=True, **kwargs):
-        self.chat_func = load_llm4chat(model_name_or_path, device, stream, **kwargs)
+    def load_llm4chat(self, model_name_or_path="THUDM/chatglm-6b", device=DEVICE, **kwargs):  # 废弃
+        self.chat_func = load_llm4chat(model_name_or_path, device, **kwargs)
+
+    @clear_cuda_cache(bins=3)
+    def __qa(self, query, knowledge_base='', role='', max_turns=1):
+        self.role = role or os.environ.get('LLM_ROLE', '')
+        self.knowledge_base = str(knowledge_base).strip()
+        if self.knowledge_base:
+            self.query = self.prompt_template.format(context=self.knowledge_base, question=query, role='')
+        else:
+            self.query = """{role}\n请回答以下问题\n{question}""".format(question=query, role=self.role)  # 知识库为空则转通用回答
+
+        global history
+        _history = history[-(max_turns - 1):] if max_turns > 1 else []  # 截取最大轮次
+        for response, history in self.chat_func(query=self.query.strip(), history=_history, return_history=True):
+            yield response, history
+
+    def load_llm(self, model_name_or_path="THUDM/chatglm-6b", device=DEVICE, return_history=False, **kwargs):
+        from chatllm.llm_models import load_llm4chat
+        self.chat_func = load_llm4chat(model_name_or_path, device=device, **kwargs)
+        self.chat_func = partial(self.chat_func, return_history=return_history)
 
     def run_serving(self, host='127.0.0.1', port=8000, path='/'):
         from flask import Flask, Response, jsonify, request

@@ -50,6 +50,7 @@ for c in completion:
     print(c.choices[0].text, end='')
 # 你好👋!我是人工智能助手 ChatGLM-6B,很高兴见到你，欢迎问我任何问题。
 ```
+### [openai_keys](./data/openai_keys.md)
 </details>
 
 ## ChatPDF

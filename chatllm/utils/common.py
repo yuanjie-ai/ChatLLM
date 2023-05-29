@@ -46,6 +46,7 @@ def load_llm(model_name_or_path="THUDM/chatglm-6b", device=DEVICE, num_gpus=2, *
             # model.transformer.prefix_encoder.float()
         elif 'chatglm' in model_name_or_path:  # chatglm多卡
             model = load_chatglm_on_gpus(model_name_or_path, num_gpus)
+            logger.info('多卡加载模型')
 
     else:
         model = model.float().to(device)
