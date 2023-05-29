@@ -26,3 +26,6 @@ https://github.com/xiaoming2028/Chatgpt-Makes-Money
 
 #
 https://github.com/yuanzhoulvpi2017/zero_nlp
+
+# chatSQL
+https://huggingface.co/spaces/ls291/ChatSQL

@@ -60,7 +60,7 @@ class ChatANN(ChatBase):
 
         return self.recall
 
-    def create_index(self, texts):
+    def create_index(self, texts):  # todo：增加 encode_model参数
         embeddings = self.encode(texts, show_progress_bar=True)
         if self.backend == 'in_memory':
             self.index = pd.DataFrame({'text': texts, 'embedding': embeddings.tolist()})
