@@ -22,7 +22,7 @@ DEVICE = (
 )
 
 if LOCAL_HOST.startswith('10.219'):
-    MODEL_PATH = "/Users/betterme/PycharmProjects/AI/CHAT_MODEL/chatglm"
+    MODEL_PATH = "/CHAT_MODEL/chatglm-6b"
 else:
     MODEL_PATH = "THUDM/chatglm-6b"
 

@@ -36,7 +36,7 @@ if __name__ == '__main__':
     from chatllm.applications.chatpdf import ChatPDF
 
     qa = ChatPDF(encode_model='nghuyong/ernie-3.0-nano-zh')  # 自动建索引
-    qa.load_llm(model_name_or_path='/Users/betterme/PycharmProjects/AI/CHAT_MODEL/chatglm', device='cpu')
+    qa.load_llm(model_name_or_path='/CHAT_MODEL/chatglm-6b', device='cpu')
     qa.create_index('../../data/财报.pdf')
 
     for i in qa(query='东北证券主营业务', topk=1, threshold=0.8):

@@ -62,5 +62,5 @@ def load_llm4chat(model_name_or_path="THUDM/chatglm-6b", device='cpu', num_gpus=
 
 
 if __name__ == '__main__':
-    for i in load_llm4chat('/Users/betterme/PycharmProjects/AI/CHAT_MODEL/chatglm')('你好', return_history=False):
+    for i in load_llm4chat('/CHAT_MODEL/chatglm-6b')('你好', return_history=False):
         print(i, end='')

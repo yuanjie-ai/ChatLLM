@@ -21,7 +21,7 @@ st.set_page_config('🔥ChatLLM', layout='centered', initial_sidebar_state='coll
 @st.cache_resource
 def get_chat_func():
     chat_func = load_llm4chat(
-        model_name_or_path="/Users/betterme/PycharmProjects/AI/CHAT_MODEL/chatglm"
+        model_name_or_path="/CHAT_MODEL/chatglm-6b"
     )
     return chat_func
 

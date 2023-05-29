@@ -71,7 +71,7 @@ class ChatANN(ChatBase):
 if __name__ == '__main__':
 
     qa = ChatANN(encode_model="nghuyong/ernie-3.0-nano-zh")
-    qa.load_llm(model_name_or_path="/Users/betterme/PycharmProjects/AI/CHAT_MODEL/chatglm")
+    qa.load_llm(model_name_or_path="/CHAT_MODEL/chatglm-6b")
     qa.create_index(['周杰伦'] * 10)
 
     for i in qa(query='有几个周杰伦'):

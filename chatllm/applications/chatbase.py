@@ -60,7 +60,7 @@ if __name__ == '__main__':
     from chatllm.applications import ChatBase
 
     qa = ChatBase()
-    qa.load_llm(model_name_or_path="/Users/betterme/PycharmProjects/AI/CHAT_MODEL/chatglm")
+    qa.load_llm(model_name_or_path="/CHAT_MODEL/chatglm-6b")
 
     for _ in qa(query='你是谁', return_history=False):
         print(_, end='')

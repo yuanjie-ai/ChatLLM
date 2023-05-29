@@ -13,7 +13,7 @@ from meutils.pipe import *
 cli = typer.Typer(name="ChatLLM CLI")
 
 if LOCAL_HOST.startswith('10.219'):
-    MODEL_PATH = "/Users/betterme/PycharmProjects/AI/CHAT_MODEL/chatglm"
+    MODEL_PATH = "/CHAT_MODEL/chatglm-6b"
 
 
 def f(a=1, **kw):

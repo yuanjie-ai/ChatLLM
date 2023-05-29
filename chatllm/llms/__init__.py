@@ -14,8 +14,9 @@ from meutils.pipe import *
 def load_llm4chat(model_name_or_path="THUDM/chatglm-6b", device='cpu', num_gpus=2, model_base=None, **kwargs):
     if not model_base:  # 模型基座
         model_base = Path(model_name_or_path).name.lower()
-        for p in Path('.').glob('*.py'):
+        for p in Path(__file__).parent.glob('*.py'):
             if p.stem in model_base:
+                # logger.warning(p) # 自动推断模型基座
                 model_base = p.stem
 
     model_base = importlib.import_module(f"chatllm.llms.{model_base}")
@@ -27,4 +28,5 @@ def load_llm4chat(model_name_or_path="THUDM/chatglm-6b", device='cpu', num_gpus=
 
 
 if __name__ == '__main__':
-    print(load_llm4chat())
+    # print(load_llm4chat('/Users/betterme/PycharmProjects/AI/CHAT_MODEL/chatglm-6b'))
+    print(Path(__file__).parent)

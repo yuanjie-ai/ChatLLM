@@ -20,7 +20,7 @@ st.set_page_config(page_title='🔥ChatPDF', layout='wide', initial_sidebar_stat
 ################################################################################################################
 class Conf(BaseConfig):
     encode_model = 'nghuyong/ernie-3.0-nano-zh'
-    llm = "THUDM/chatglm-6b"  # /Users/betterme/PycharmProjects/AI/CHAT_MODEL/chatglm
+    llm = "THUDM/chatglm-6b"  # /Users/betterme/PycharmProjects/AI/CHAT_MODEL/chatglm-6b
     cachedir = 'pdf_cache'
 
     topk: int = 3

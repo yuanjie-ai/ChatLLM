@@ -12,7 +12,7 @@ from meutils.pipe import *
 from chatllm.applications import ChatBase
 
 qa = ChatBase()
-qa.load_llm4chat(model_name_or_path="/Users/betterme/PycharmProjects/AI/CHAT_MODEL/chatglm")
+qa.load_llm4chat(model_name_or_path="/CHAT_MODEL/chatglm-6b")
 #
 # list(qa(query='你是谁', knowledge_base=''))
 # list(qa(query='你是谁', knowledge_base='周杰伦是傻子', role=''))
