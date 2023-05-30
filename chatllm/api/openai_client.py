@@ -15,12 +15,11 @@ import openai
 def completion(
     prompt='你好', history=None, chat=False,
     api_base='https://api.openai-proxy.com/v1',  # https://t.me/openai_proxy
-    api_key='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'
+    api_key='sk-'
 ):
     openai.api_base = api_base
     openai.api_key = api_key
     kwargs = {
-        "request_id": 'xxxx',
         "model": "gpt-3.5-turbo",
         "stream": True,
         "max_tokens": 1000,

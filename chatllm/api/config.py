@@ -17,7 +17,7 @@ torch_gc = clear_cuda_cache(lambda: logger.info('Clear GPU'), bins=os.getenv('TI
 
 ######################配置#####################################
 tokens = set(os.getenv('TOKENS', 'chatllm').split(','))
-llm_model = os.getenv('LLM_MODEL')
+llm_model = os.getenv('LLM_MODEL', '')
 embedding_model = os.getenv('EMBEDDING_MODEL')
 device = os.getenv('DEVICE', 'cpu')
 num_gpus = os.getenv('NUM_GPUS', 2)
@@ -39,16 +39,19 @@ else:
 
     embedding_model = RandomSentenceTransformer()
 
-if llm_model:  # 必配参数
+if llm_model:
     _do_chat = load_llm4chat(model_name_or_path=llm_model, device=device, num_gpus=num_gpus)  # return_history=False默认
 
 
     def do_chat(query, **kwargs):
         if llm_role:
-            query = """{role}\n请回答以下问题\n{question}""".format(question=query, role=llm_role)  # 扮演角色
+            query = """{role}\n请回答以下问题\n{question}""".format(question=query, role=llm_role)  # 增加角色扮演
         return _do_chat(query, **kwargs)
 
-else:
+elif 'dev' in llm_model.lower() or 'test' in llm_model.lower():
     def do_chat(query, **kwargs):  # DEV
-        logger.debug("请配置 LLM_MODEL")
+        logger.debug("测试环境")
         yield from query
+else:
+    raise Exception("请配置 LLM_MODEL !!!")
+
