@@ -36,18 +36,6 @@ def webui(name: str = 'chatpdf', port=8501):
 
 
 @cli.command()  # help会覆盖docstring
-def flask_api(model_name_or_path=None, host='127.0.0.1', port=8000, path='/'):
-    """
-        chatllm-run flask-api --model_name_or_path <MODEL_PATH> --host 127.0.0.1 --port 8000
-    """
-    from chatllm.applications import ChatBase
-
-    qa = ChatBase()
-    qa.load_llm4chat(model_name_or_path or MODEL_PATH)
-    qa.run_serving(host, port, path)
-
-
-@cli.command()  # help会覆盖docstring
 def openapi(llm_model, host='127.0.0.1', port: int = 8000, debug='1'):
     """
         chatllm-run openapi <MODEL_PATH> --host 127.0.0.1 --port 8000

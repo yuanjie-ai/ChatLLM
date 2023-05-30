@@ -16,7 +16,7 @@ def generate_response(content: str, chat: bool = True):
         return {
             "id": "chatcmpl-77PZm95TtxE0oYLRx3cxa6HtIDI7s",
             "object": "chat.completion",
-            "created": 1682000966,
+            "created": int(time.time()),
             "model": "gpt-3.5-turbo-0301",
             "usage": {
                 "prompt_tokens": 0,
@@ -32,7 +32,7 @@ def generate_response(content: str, chat: bool = True):
         return {
             "id": "cmpl-uqkvlQyYK7bGYrRHQ0eXlWi7",
             "object": "text_completion",
-            "created": 1589478378,
+            "created": int(time.time()),
             "model": "text-davinci-003",
             "choices": [
                 {
@@ -53,7 +53,7 @@ def generate_response(content: str, chat: bool = True):
 def generate_stream_response_start():
     return {
         "id": "chatcmpl-77QWpn5cxFi9sVMw56DZReDiGKmcB",
-        "object": "chat.completion.chunk", "created": 1682004627,
+        "object": "chat.completion.chunk", "created": int(time.time()),
         "model": "gpt-3.5-turbo-0301",
         "choices": [{"delta": {"role": "assistant"}, "index": 0, "finish_reason": None}]
     }
@@ -64,15 +64,15 @@ def generate_stream_response(content: str, chat: bool = True):
         return {
             "id": "chatcmpl-77QWpn5cxFi9sVMw56DZReDiGKmcB",
             "object": "chat.completion.chunk",
-            "created": 1682004627,
+            "created": int(time.time()),
             "model": "gpt-3.5-turbo-0301",
-            "choices": [{"delta": {"content": content}, "index": 0, "finish_reason": None}
-                        ]}
+            "choices": [{"delta": {"content": content}, "index": 0, "finish_reason": None}]
+        }
     else:
         return {
             "id": "cmpl-7GfnvmcsDmmTVbPHmTBcNqlMtaEVj",
             "object": "text_completion",
-            "created": 1684208299,
+            "created": int(time.time()),
             "choices": [
                 {
                     "text": content,
@@ -88,7 +88,7 @@ def generate_stream_response(content: str, chat: bool = True):
 def generate_stream_response_stop(chat: bool = True):
     if chat:
         return {"id": "chatcmpl-77QWpn5cxFi9sVMw56DZReDiGKmcB",
-                "object": "chat.completion.chunk", "created": 1682004627,
+                "object": "chat.completion.chunk", "created": int(time.time()),
                 "model": "gpt-3.5-turbo-0301",
                 "choices": [{"delta": {}, "index": 0, "finish_reason": "stop"}]
                 }
@@ -96,7 +96,7 @@ def generate_stream_response_stop(chat: bool = True):
         return {
             "id": "cmpl-7GfnvmcsDmmTVbPHmTBcNqlMtaEVj",
             "object": "text_completion",
-            "created": 1684208299,
+            "created": int(time.time()),
             "choices": [
                 {"text": "", "index": 0, "logprobs": None, "finish_reason": "stop"}],
             "model": "text-davinci-003",

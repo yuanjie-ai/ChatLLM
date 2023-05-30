@@ -15,8 +15,17 @@ from chatllm.llms import load_llm4chat
 
 torch_gc = clear_cuda_cache(lambda: logger.info('Clear GPU'), bins=os.getenv('TIME_INTERVAL', 15))
 
+######################配置#####################################
 tokens = set(os.getenv('TOKENS', 'chatllm').split(','))
+llm_model = os.getenv('LLM_MODEL')
 embedding_model = os.getenv('EMBEDDING_MODEL')
+device = os.getenv('DEVICE', 'cpu')
+num_gpus = os.getenv('NUM_GPUS', 2)
+
+llm_role = os.getenv('LLM_ROLE', '')
+###############################################################
+
+
 if embedding_model:
     from sentence_transformers import SentenceTransformer
 
@@ -30,13 +39,16 @@ else:
 
     embedding_model = RandomSentenceTransformer()
 
-llm_model = os.getenv('LLM_MODEL')
-device = os.getenv('DEVICE', 'cpu')
-num_gpus = os.getenv('NUM_GPUS', 2)
-
 if llm_model:  # 必配参数
-    do_chat = load_llm4chat(model_name_or_path=llm_model, device=device, num_gpus=num_gpus)
-    do_chat = partial(do_chat, return_history=False)
+    _do_chat = load_llm4chat(model_name_or_path=llm_model, device=device, num_gpus=num_gpus)  # return_history=False默认
+
+
+    def do_chat(query, **kwargs):
+        if llm_role:
+            query = """{role}\n请回答以下问题\n{question}""".format(question=query, role=llm_role)  # 扮演角色
+        return _do_chat(query, **kwargs)
+
 else:
     def do_chat(query, **kwargs):  # DEV
-        yield from '请配置 LLM_MODEL'
+        logger.debug("请配置 LLM_MODEL")
+        yield from query

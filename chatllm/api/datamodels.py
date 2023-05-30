@@ -17,7 +17,11 @@ class Message(BaseModel):
 
 
 class ChatBody(BaseModel):
+    userid: str = None
+    # knowledge_base: str = None
+
     messages: List[Message]
+
     model: str
     stream: Optional[bool] = False
     max_tokens: Optional[int]
@@ -26,7 +30,11 @@ class ChatBody(BaseModel):
 
 
 class CompletionBody(BaseModel):
+    userid: str = None
+    # knowledge_base: str = None
+
     prompt: str
+
     model: str
     stream: Optional[bool] = False
     max_tokens: Optional[int]

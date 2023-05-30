@@ -45,8 +45,8 @@ setup(
     long_description_content_type="text/markdown",
     include_package_data=True,
     keywords='chatllm',
-    name='ChatLLM',
-    # name='ChatSearch', # 抢占包
+    name='chatllm',
+    # name='CPM-Bee', # 抢占包
 
     packages=find_packages(include=['chatllm', 'chatllm.*']),
 

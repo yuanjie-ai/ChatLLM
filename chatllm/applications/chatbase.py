@@ -36,7 +36,7 @@ class ChatBase(object):
 
     @clear_cuda_cache(bins=int(os.getenv('GPU_TIME_INTERVAL', 2)))
     def _qa(self, query, knowledge_base='', role='', max_turns=1, return_history=False):
-        self.role = role or os.environ.get('LLM_ROLE', '')
+        self.role = role or os.getenv('LLM_ROLE', '')
         self.knowledge_base = str(knowledge_base).strip()
         if self.knowledge_base:
             self.query = self.prompt_template.format(context=self.knowledge_base, question=query, role='')
