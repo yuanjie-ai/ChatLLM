@@ -65,8 +65,9 @@ async def chat_completions(body: ChatBody, request: Request, background_tasks: B
                     first = False
                     yield json.dumps(generate_stream_response_start(), ensure_ascii=False)
                 _ = generate_stream_response(_response)
-                response += _['choices'][0].get('delta').get('content', '')
                 yield json.dumps(_, ensure_ascii=False)
+
+                response += _response  # response += _['choices'][0].get('delta').get('content', '')
 
             yield json.dumps(generate_stream_response_stop(), ensure_ascii=False)
             yield "[DONE]"
@@ -105,7 +106,9 @@ async def completions(body: CompletionBody, request: Request, background_tasks: 
             for _response in do_chat(question, **chat_kwargs):
                 _ = generate_stream_response(_response, chat=False)
                 yield json.dumps(_, ensure_ascii=False)
-                response += _['choices'][0].get('text', '')  ###
+
+                response += _response  # response += _['choices'][0].get('text', '')
+
             yield json.dumps(generate_stream_response_stop(chat=False), ensure_ascii=False)
             yield "[DONE]"
             if os.getenv('DEBUG'): logger.info(generate_response(response, chat=False))  # 日志

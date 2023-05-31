@@ -38,7 +38,7 @@ def load_llm(model_name_or_path="THUDM/chatglm-6b", device='cpu', num_gpus=2):
 def load_llm4chat(model_name_or_path="THUDM/chatglm-6b", device='cpu', num_gpus=2):
     model, tokenizer = load_llm(model_name_or_path, device, num_gpus)
 
-    def stream_chat(query, history=None, return_history=False, **chat_kwargs):
+    def stream_chat(query, history=None, return_history=False, **chat_kwargs):  # 是否增加全量更新 full_update=False,
         """
         for i in chat('1+1', return_history=False):
             print(i, end='')

@@ -25,7 +25,7 @@ class ChatBase(object):
         self.role = None
 
         # 重写 chat函数会更好 prompt += "[Round {}]\n问：{}\n答：{}\n".format(i, old_query, response) # 根据角色配置模板
-        self.prompt_template = os.environ.get('PROMPT_TEMPLATE', '{role}')
+        self.prompt_template = os.getenv('PROMPT_TEMPLATE', '{role}')
 
     def __call__(self, **kwargs):
         return self.qa(**kwargs)
