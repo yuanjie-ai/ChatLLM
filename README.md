@@ -35,8 +35,8 @@ for i in qa(query='周杰伦是谁', knowledge_base='周杰伦是傻子'):
 # 服务端
 pip install "chatllm[openai]" && chatllm-run openai <本地模型地址>
 ```
+- SDK：`pip install openai`
 ```python
-# 客户端
 import openai
 
 openai.api_base = 'http://0.0.0.0:8000/v1'
@@ -47,6 +47,11 @@ for c in completion:
     print(c.choices[0].text, end='')
 # 你好👋!我是人工智能助手 ChatGLM-6B,很高兴见到你，欢迎问我任何问题。
 ```
+- 客户端：[点击下载chatbox](https://chatboxapp.xyz/)
+> 可接入任意openai客户端
+
+![客户端](data/imgs/chatbox.png)
+
 ### [openai_keys](./data/openai_keys.md): `不定期更新免费keys`
 </details>
 

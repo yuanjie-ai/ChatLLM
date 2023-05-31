@@ -17,29 +17,31 @@ class Message(BaseModel):
 
 
 class ChatBody(BaseModel):
-    userid: str = None
-    # knowledge_base: str = None
-
-    messages: List[Message]
-
+    user: str = None
     model: str
     stream: Optional[bool] = False
     max_tokens: Optional[int]
     temperature: Optional[float]
     top_p: Optional[float]
+
+    messages: List[Message]  # Chat
+
+    # 本地大模型
+    knowledge_base: str = None
 
 
 class CompletionBody(BaseModel):
-    userid: str = None
-    # knowledge_base: str = None
-
-    prompt: str
-
+    user: str = None
     model: str
     stream: Optional[bool] = False
     max_tokens: Optional[int]
     temperature: Optional[float]
     top_p: Optional[float]
+
+    prompt: str  # Prompt
+
+    # 本地大模型
+    knowledge_base: str = None
 
 
 class EmbeddingsBody(BaseModel):

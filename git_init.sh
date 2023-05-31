@@ -3,8 +3,8 @@
 #git init
 # shellcheck disable=SC2035
 git add *
-#git commit -m "[feat] add ChatWhoosh"
-git commit -m "fix: glm-openai-chat-bug"
+git commit -m "add: 支持chatbox客户端"
+#git commit -m "fix: glm-openai-chat-bug"
 #git commit -m "init"
 
 #git remote add origin git@github.com:yuanjie-ai/llm4gpt.git

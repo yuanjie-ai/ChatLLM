@@ -20,44 +20,70 @@ pip install -U chatllm
 from chatllm.applications import ChatBase
 
 qa = ChatBase()
-qa.load_llm4chat(model_name_or_path="THUDM/chatglm-6b")
-
-_ = list(qa(query='周杰伦是谁', knowledge_base='周杰伦是傻子'))
+qa.load_llm(model_name_or_path="THUDM/chatglm-6b")
+for i in qa(query='周杰伦是谁', knowledge_base='周杰伦是傻子'):
+    print(i, end='')
 # 根据已知信息无法回答该问题，因为周杰伦是中国内地流行歌手、演员、音乐制作人、导演，
 # 是具有一定的知名度和专业能力的人物，没有提供足够的信息无法判断他是傻子。
 ```
 
-- 支持角色扮演
-  ![img.png](data/imgs/role.png)
+## OpenaiEcosystem
+<details markdown="1">
+  <summary>Click to 无缝对接openai生态</summary>
+
+```shell
+# 服务端
+pip install "chatllm[openai]" && chatllm-run openai <本地模型地址>
+```
+```python
+# 客户端
+import openai
+
+openai.api_base = 'http://0.0.0.0:8000/v1'
+openai.api_key = 'chatllm'
+prompt = "你好"
+completion = openai.Completion.create(prompt=prompt, stream=True, model="text-davinci-003")
+for c in completion:
+    print(c.choices[0].text, end='')
+# 你好👋!我是人工智能助手 ChatGLM-6B,很高兴见到你，欢迎问我任何问题。
+```
+### [openai_keys](./data/openai_keys.md): `不定期更新免费keys`
+</details>
 
 ## ChatPDF
 
 <details markdown="1">
   <summary>Click to ChatPDF</summary>
 
-一键启动UI `chatllm-run webui --name chatpdf`
+
+```shell
+pip install "chatllm[pdf]" && chatllm-run webui --name chatpdf
+```
+
+- python交互
 
 ```python
 from chatllm.applications.chatpdf import ChatPDF
 
 qa = ChatPDF(encode_model='nghuyong/ernie-3.0-nano-zh')
-qa.load_llm4chat(model_name_or_path="THUDM/chatglm-6b")
+qa.load_llm(model_name_or_path="THUDM/chatglm-6b")
 qa.create_index('财报.pdf')  # 构建知识库
 
-list(qa(query='东北证券主营业务'))
+for i in qa(query='东北证券主营业务'):
+    print(i, end='')
 # 根据已知信息，东北证券的主营业务为证券业务。公司作为证券公司，主要从事证券经纪、证券投资咨询、与证券交易、
 # 证券投资活动有关的财务顾问、证券承销与保荐、证券自营、融资融券、证券投资基金代销和代销金融产品待业务。
 ```
 
-- 支持查看召回结果
+- 支持召回结果查看
   ![向量召回结果](data/imgs/chatpdf.gif)
 
 </details>
 
-## 开发部署
+## Deploy
 
 <details markdown="1">
-  <summary>Click to 开发部署</summary>
+  <summary>Click to Deploy</summary>
 
 - ChatGLM-6B 模型硬件需求
 
@@ -67,21 +93,11 @@ list(qa(query='东北证券主营业务'))
   | INT8           | 8 GB                     | 9 GB                             |
   | INT4           | 6 GB                      | 7 GB                              |
 
-- Embedding 模型硬件需求
 
-  本项目中默认选用的 Embedding
-  模型 [GanymedeNil/text2vec-large-chinese](https://huggingface.co/GanymedeNil/text2vec-large-chinese/tree/main) 约占用显存
-  3GB，也可修改为在 CPU 中运行。
-
-### 软件需求
-
-本项目已在 Python 3.8 - 3.10，CUDA 11.7 环境下完成测试。已在 Windows、ARM 架构的 macOS、Linux 系统中完成测试。
-
-### 从本地加载模型
-
-- [安装指南](docs/INSTALL.md)
-- [ChatGLM-6B Mac 本地部署实操记录](https://www.yuque.com/arvinxx/llm/chatglm-6b-deployment-on-mac)
-- [THUDM/ChatGLM-6B#从本地加载模型](https://github.com/THUDM/ChatGLM-6B#从本地加载模型)
+- 从本地加载模型
+    - [安装指南](docs/INSTALL.md)
+    - [ChatGLM-6B Mac 本地部署实操记录](https://www.yuque.com/arvinxx/llm/chatglm-6b-deployment-on-mac)
+    - [THUDM/ChatGLM-6B#从本地加载模型](https://github.com/THUDM/ChatGLM-6B#从本地加载模型)
 
 </details>
 
@@ -95,8 +111,24 @@ list(qa(query='东北证券主营业务'))
     - [ ] 搜索引擎与本地网页接入
     - [ ] 结构化数据接入（如 csv、Excel、SQL 等）
     - [ ] 知识图谱/图数据库接入
-    - [ ] Agent 实现
-    - [ ] 增加 ANN 后端，ES/RedisSearch【生产高可用】
+    - [ ] 增加 ANN 后端，ES/RedisSearch【确保生产高可用】
+    - [ ] 增加多级缓存缓存
+
+- [ ] 多路召回
+    - [ ] 问
+        - [ ] 标量匹配
+        - [x] 多种向量化，向量匹配
+        - [ ] 增加相似问，换几个问法
+        - [ ] 高置信度直接返回答案【匹配标准问】
+    - [ ] 答
+        - [ ] 高置信度篇章
+        - [ ] 增加上下文信息
+        - [ ] 增加夸篇章信息
+        - [ ] 增加召回信息的相似信息
+        - [ ] 提前生成标准问，匹配问
+        - [ ] 拒绝推断
+
+
 - [ ] 增加更多 LLM 模型支持
     - [x] [THUDM/chatglm-6b](https://huggingface.co/THUDM/chatglm-6b)
     - [ ] [THUDM/chatglm-6b-int8](https://huggingface.co/THUDM/chatglm-6b-int8)
@@ -118,14 +150,18 @@ list(qa(query='东北证券主营业务'))
         - [ ] 上传文件/文件夹至知识库
         - [ ] 删除知识库中文件
 - [ ] 增加 API 支持
-    - [ ] 利用 Fastapi/Flask/Grpc 实现流式接口
+    - [x] 利用 Fastapi/Flask/Grpc
+      实现流式接口 `chatllm-run openai <本地模型地址> --host 127.0.0.1 --port 8000`
     - [ ] 前后端分离，实现调用 API 的 Web UI Demo
 
-## 交流群
-
-![二维码]()
-
 </details>
+
+## 交流群
+<div align=center>
+<img src="data/imgs/群.png" alt="群" width="250" height="400">
+</div>
+
+> 若二维码失效加微信拉群 313303303
 
 
 

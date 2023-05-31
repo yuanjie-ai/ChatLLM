@@ -25,12 +25,13 @@ def completion(
         "max_tokens": 1000,
         "temperature": None,
         "top_p": None,
+
+        "user": "Betterme"
     }
     if is_open('0.0.0.0:8000'):
         logger.debug("本地大模型")
         openai.api_base = 'http://0.0.0.0:8000/v1'
         openai.api_key = 'chatllm'
-        kwargs['userid'] = 'NESC'  ###
 
     if chat:
         history = history or []  # [{"role": "system", "content": "你是东北证券大模型"}]
