@@ -45,7 +45,9 @@ def qa4pdf(encode_model, model_name_or_path, cachedir):
 
 
 def reply_func(query):
-    for response, _ in qa(query=query, topk=conf.topk, threshold=conf.threshold):
+    response = ''
+    for _ in qa(query=query, topk=conf.topk, threshold=conf.threshold):
+        response += _
         yield response
 
 
