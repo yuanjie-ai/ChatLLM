@@ -47,9 +47,7 @@ for c in completion:
     print(c.choices[0].text, end='')
 # 你好👋!我是人工智能助手 ChatGLM-6B,很高兴见到你，欢迎问我任何问题。
 ```
-- 客户端：[点击下载chatbox](https://chatboxapp.xyz/)
-> 可接入任意openai客户端
-
+- 客户端：[点击下载chatbox](https://chatboxapp.xyz/)，也可接入客户端
 ![客户端](data/imgs/chatbox.png)
 
 ### [openai_keys](./data/openai_keys.md): `不定期更新免费keys`
