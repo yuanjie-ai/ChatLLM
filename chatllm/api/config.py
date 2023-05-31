@@ -39,19 +39,11 @@ else:
 
     embedding_model = RandomSentenceTransformer()
 
-if llm_model:
-    _do_chat = load_llm4chat(model_name_or_path=llm_model, device=device, num_gpus=num_gpus)  # return_history=False默认
+# 获取 do_chat
+_do_chat = load_llm4chat(model_name_or_path=llm_model, device=device, num_gpus=num_gpus)
 
 
-    def do_chat(query, **kwargs):
-        if llm_role:
-            query = """{role}\n请回答以下问题\n{question}""".format(question=query, role=llm_role)  # 增加角色扮演
-        return _do_chat(query, **kwargs)
-
-elif 'dev' in llm_model.lower() or 'test' in llm_model.lower():
-    def do_chat(query, **kwargs):  # DEV
-        logger.debug("测试环境")
-        yield from query
-else:
-    raise Exception("请配置 LLM_MODEL !!!")
-
+def do_chat(query, **kwargs):
+    if llm_role:
+        query = """{role}\n请回答以下问题\n{question}""".format(question=query, role=llm_role)  # 增加角色扮演
+    return _do_chat(query, **kwargs)

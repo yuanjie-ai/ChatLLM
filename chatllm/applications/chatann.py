@@ -40,11 +40,10 @@ class ChatANN(ChatBase):
 
     def qa(self, query, topk=3, threshold=0.66, **kwargs):
         df = self.find(query, topk, threshold)
-        if len(df) == 0:
-            logger.warning('召回内容为空!!!')
-
-        knowledge_base = '\n'.join(df.text)
-        return self._qa(query, knowledge_base, **kwargs)
+        if len(df):
+            knowledge_base = '\n'.join(df.text)
+            return self._qa(query, knowledge_base, **kwargs)
+        logger.error('召回内容为空!!!')
 
     def find(self, query, topk=5, threshold=0.66):  # 返回df
         v = self.encode([query])  # ndim=2

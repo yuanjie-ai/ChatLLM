@@ -70,7 +70,7 @@ async def chat_completions(body: ChatBody, request: Request, background_tasks: B
 
             yield json.dumps(generate_stream_response_stop(), ensure_ascii=False)
             yield "[DONE]"
-            if os.getenv('DEBUG'): logger.info(generate_response(response))  # 日志
+            if os.getenv('DEBUG'): logger.info(generate_response(response))  # 日志：todo 写入数据库
 
         return EventSourceResponse(eval_llm(), ping=10000)
     else:

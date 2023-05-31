@@ -26,8 +26,6 @@ setup(
         'Intended Audience :: Developers',
         'License :: OSI Approved :: MIT License',
         'Natural Language :: English',
-        'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
     ],
@@ -46,7 +44,7 @@ setup(
     include_package_data=True,
     keywords='chatllm',
     name='chatllm',
-    # name='CPM-Bee', # 抢占包
+    # name='llms', # 抢占包
 
     packages=find_packages(include=['chatllm', 'chatllm.*']),
 

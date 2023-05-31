@@ -12,9 +12,10 @@ from meutils.pipe import *
 
 
 def generate_response(content: str, chat: bool = True):
+    _id = uuid.uuid3(uuid.NAMESPACE_DNS, content)  # 内容id
     if chat:
         return {
-            "id": "chatcmpl-77PZm95TtxE0oYLRx3cxa6HtIDI7s",
+            "id": f"chatcmpl-{_id}",
             "object": "chat.completion",
             "created": int(time.time()),
             "model": "gpt-3.5-turbo-0301",
@@ -30,7 +31,7 @@ def generate_response(content: str, chat: bool = True):
         }
     else:
         return {
-            "id": "cmpl-uqkvlQyYK7bGYrRHQ0eXlWi7",
+            "id": f"cmpl-{_id}",
             "object": "text_completion",
             "created": int(time.time()),
             "model": "text-davinci-003",
