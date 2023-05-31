@@ -84,9 +84,8 @@ if st.session_state.get('init'):
                     )
 
             with st.expander('点击可查看被召回的知识'):
-                st.dataframe(qa.recall.drop('embedding', 1, errors='ignore'))
+                st.dataframe(qa.recall.drop(labels='embedding', axis=1, errors='ignore'))
                 # st.dataframe(qa.recall)
-
 
     with tabs[1]:
         if bytes_array:
