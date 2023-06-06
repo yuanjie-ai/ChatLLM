@@ -13,7 +13,7 @@ from meutils.pipe import *
 
 def generate_response(content: str, chat: bool = True):
     # 客户端会更新这些值
-    _id = uuid.uuid3(uuid.NAMESPACE_DNS, content)  # 内容id
+    _id = uuid.uuid1()  # 内容id
     _time = int(time.time())
 
     if chat:

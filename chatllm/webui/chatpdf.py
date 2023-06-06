@@ -38,7 +38,7 @@ conf = set_config(conf)
 def qa4pdf(encode_model, model_name_or_path, cachedir):
     qa = ChatPDF(encode_model=encode_model)
     # qa.encode = disk_cache(qa.encode, location=cachedir)  # 缓存
-    qa.load_llm(model_name_or_path=model_name_or_path)
+    qa.load_llm(model_name_or_path=model_name_or_path, num_gpus=2)
     qa.create_index = lru_cache()(qa.create_index)
 
     return qa

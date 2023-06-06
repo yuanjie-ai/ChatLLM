@@ -35,7 +35,9 @@ def load_llm4chat(model_name_or_path="THUDM/chatglm-6b", device='cpu', num_gpus=
         logger.error(f"Unsupported model base: 测试环境可测试，生产环境请配置 LLM_MODEL ⚠️\n{e}")
 
         def do_chat(query, **kwargs):  # DEV
-            yield from f"🔥🔥🔥\n\n生产环境请配置 LLM_MODEL ⚠️\n\n🔥🔥🔥\n"
+            for i in f"🔥🔥🔥\n\n生产环境请配置 LLM_MODEL ⚠️\n\n🔥🔥🔥\n":
+                time.sleep(0.2)
+                yield i
 
         return do_chat
 

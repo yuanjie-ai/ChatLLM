@@ -16,7 +16,12 @@ router = APIRouter()
 
 @router.get("/")
 def read_root():
-    return {"Hello World!": "ChatLLM"}
+    return {"Hi, baby.": "https://github.com/yuanjie-ai/ChatLLM"}
+
+
+@router.get("/gpu")
+def gpu_info():
+    return os.popen("nvidia-smi").read()
 
 
 @router.get("/v1/models")

@@ -32,3 +32,12 @@ https://huggingface.co/spaces/ls291/ChatSQL
 
 # 网盘
 https://github.com/sc0tfree/updog
+
+# 模型加速
+https://mp.weixin.qq.com/s/uV4Y_q4GnTUAsRVHxJGxGA
+
+# embedding: https://huggingface.co/spaces/mteb/leaderboard
+https://instructor-embedding.github.io/
+
+# 长篇小说
+https://www.jiqizhixin.com/articles/2023-05-28-3

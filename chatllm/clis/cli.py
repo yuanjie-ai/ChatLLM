@@ -7,18 +7,11 @@
 # @Email        : meutils@qq.com
 # @Software     : PyCharm
 # @Description  :
+import os
 
 from meutils.pipe import *
 
 cli = typer.Typer(name="ChatLLM CLI")
-
-if LOCAL_HOST.startswith('10.219'):
-    MODEL_PATH = "/CHAT_MODEL/chatglm-6b"
-
-
-def f(a=1, **kw):
-    print(a)
-    print(kw)
 
 
 @cli.command(help="help")  # help会覆盖docstring
@@ -41,8 +34,8 @@ def openapi(llm_model, host='127.0.0.1', port: int = 8000, debug='1'):
         chatllm-run openapi <MODEL_PATH> --host 127.0.0.1 --port 8000
     """
 
-    os.environ['LLM_MODEL'] = llm_model
     os.environ['DEBUG'] = debug
+    os.environ['LLM_MODEL'] = llm_model
 
     from meutils.serving.fastapi import App
     from chatllm.api.routes.api import router

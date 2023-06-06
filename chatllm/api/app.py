@@ -10,8 +10,9 @@
 
 from meutils.pipe import *
 
-os.environ['LLM_MODEL'] = '/Users/betterme/PycharmProjects/AI/CHAT_MODEL/chatglm'
+# os.environ['LLM_MODEL'] = '/Users/betterme/PycharmProjects/AI/CHAT_MODEL/chatglm'
 os.environ['DEBUG'] = '1'
+os.environ['DB_URL'] = "mysql+pymysql://root:root123456@localhost/test"
 
 from meutils.serving.fastapi import App
 
@@ -24,3 +25,4 @@ if __name__ == '__main__':
     app = App()
     app.include_router(router)
     app.run()
+

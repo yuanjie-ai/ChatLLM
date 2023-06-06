@@ -21,6 +21,7 @@ router = APIRouter()
 
 def do_embeddings(body: EmbeddingsBody, request: Request, background_tasks: BackgroundTasks):
     background_tasks.add_task(torch_gc)
+
     if request.headers.get("Authorization").split(" ")[1] not in tokens:
         raise HTTPException(status.HTTP_401_UNAUTHORIZED, "Token is wrong!")
 
@@ -31,7 +32,7 @@ def do_embeddings(body: EmbeddingsBody, request: Request, background_tasks: Back
     if isinstance(texts, str):
         texts = [texts]
 
-    embeddings = embeddings_model.encode(texts)
+    embeddings = embedding_model.encode(texts)
 
     data = []
     for i, embed in enumerate(embeddings):

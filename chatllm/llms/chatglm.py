@@ -21,6 +21,7 @@ def load_llm(model_name_or_path="THUDM/chatglm-6b", device='cpu', num_gpus=2):
     tokenizer = AutoTokenizer.from_pretrained(model_name_or_path, trust_remote_code=True)
 
     if torch.cuda.is_available() and device.lower().startswith("cuda"):
+        print(os.popen("nvidia-smi").read())
         num_gpus = min(num_gpus, torch.cuda.device_count())
 
         if num_gpus == 1:  # 单卡

@@ -4,8 +4,8 @@
 # shellcheck disable=SC2035
 git add *
 #git commit -m "add: 支持chatbox客户端"
-git commit -m "fix: pandas2.0 `df.drop` bug"
-#git commit -m "init"
+#git commit -m "fix: pandas2.0 `df.drop` bug"
+git commit -m "init"
 
 #git remote add origin git@github.com:yuanjie-ai/llm4gpt.git
 #git branch -M master

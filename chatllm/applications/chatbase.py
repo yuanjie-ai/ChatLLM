@@ -41,7 +41,7 @@ class ChatBase(object):
         if self.knowledge_base:
             self.query = self.prompt_template.format(context=self.knowledge_base, question=query, role='')
         else:
-            self.query = """{role}\n请回答以下问题\n{question}""".format(question=query, role=self.role)  # 知识库为空则转通用回答
+            self.query = """{role}\n基于以上角色，请回答以下问题：{question}""".format(question=query, role=self.role)  # 知识库为空则转通用回答
 
         global history
         _history = history[-(max_turns - 1):] if max_turns > 1 else []  # 截取最大轮次

@@ -21,11 +21,6 @@ DEVICE = (
     else "cpu"
 )
 
-if LOCAL_HOST.startswith('10.219'):
-    MODEL_PATH = "/CHAT_MODEL/chatglm-6b"
-else:
-    MODEL_PATH = "THUDM/chatglm-6b"
-
 xgroup = Pipe(lambda ls, step=3, overlap_rate=0: [ls[max(idx - int(step * overlap_rate), 0): idx + step] for idx in
                                                   range(0, len(ls), step)])
 
