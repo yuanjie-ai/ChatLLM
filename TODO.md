@@ -16,8 +16,6 @@ https://huggingface.co/bigscience/bloom-560m
 
 提示模板
 https://github.com/f/awesome-chatgpt-prompts
-
-
 https://github.com/TheRamU/Fay
 
 
@@ -38,6 +36,10 @@ https://mp.weixin.qq.com/s/uV4Y_q4GnTUAsRVHxJGxGA
 
 # embedding: https://huggingface.co/spaces/mteb/leaderboard
 https://instructor-embedding.github.io/
+https://modelscope.cn/models/damo/nlp_corom_sentence-embedding_chinese-base/summary
+
+打榜
+https://aistudio.baidu.com/aistudio/competition/detail/45/0/leaderboard
 
 # 长篇小说
 https://www.jiqizhixin.com/articles/2023-05-28-3

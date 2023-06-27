@@ -18,7 +18,7 @@ from sentence_transformers import SentenceTransformer
 
 class ChatANN(ChatBase):
 
-    def __init__(self, backend='in_memory', encode_model="nghuyong/ernie-3.0-nano-zh", **kwargs):
+    def __init__(self, backend='in_memory', encode_model="moka-ai/m3e-small", **kwargs):
         """
         :param backend:
             'in_memory' # todo: 支持更多后端

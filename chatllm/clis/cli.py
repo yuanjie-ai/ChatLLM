@@ -14,11 +14,6 @@ from meutils.pipe import *
 cli = typer.Typer(name="ChatLLM CLI")
 
 
-@cli.command(help="help")  # help会覆盖docstring
-def clitest(**kwargs):  # 不支持 **kwargs
-    f(**kwargs)
-
-
 @cli.command()  # help会覆盖docstring
 def webui(name: str = 'chatpdf', port=8501):
     """

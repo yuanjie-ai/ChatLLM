@@ -44,7 +44,7 @@ setup(
     include_package_data=True,
     keywords='chatllm',
     name='chatllm',
-    # name='llms', # 抢占包
+    # name='llm-openai', # 抢占包
 
     packages=find_packages(include=['chatllm', 'chatllm.*']),
 

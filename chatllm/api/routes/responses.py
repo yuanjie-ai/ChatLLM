@@ -67,11 +67,12 @@ def generate_stream_response_start():
 
 
 def generate_stream_response(content: str, chat: bool = True):
+    _id = uuid.uuid1()  # 内容id
     _time = int(time.time())
 
     if chat:
         return {
-            "id": "chatcmpl-77QWpn5cxFi9sVMw56DZReDiGKmcB",  # TODO
+            "id": f"chatcmpl-{_id}",  # TODO
             "object": "chat.completion.chunk",
             "created": _time,
             "model": "gpt-3.5-turbo-0301",
@@ -79,7 +80,7 @@ def generate_stream_response(content: str, chat: bool = True):
         }
     else:
         return {
-            "id": "cmpl-7GfnvmcsDmmTVbPHmTBcNqlMtaEVj",
+            "id": f"cmpl-{_id}",
             "object": "text_completion",
             "created": _time,
             "choices": [
@@ -95,11 +96,12 @@ def generate_stream_response(content: str, chat: bool = True):
 
 
 def generate_stream_response_stop(chat: bool = True):
+    _id = uuid.uuid1()  # 内容id
     _time = int(time.time())
 
     if chat:
         return {
-            "id": "chatcmpl-77QWpn5cxFi9sVMw56DZReDiGKmcB",
+            "id": f"chatcmpl-{_id}",
             "object": "chat.completion.chunk",
             "created": _time,
             "model": "gpt-3.5-turbo-0301",
@@ -107,7 +109,7 @@ def generate_stream_response_stop(chat: bool = True):
         }
     else:
         return {
-            "id": "cmpl-7GfnvmcsDmmTVbPHmTBcNqlMtaEVj",
+            "id": f"cmpl-{_id}",
             "object": "text_completion",
             "created": _time,
             "choices": [

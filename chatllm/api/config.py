@@ -24,7 +24,7 @@ tokens = set(os.getenv('TOKENS', 'chatllm').split(','))
 llm_model = os.getenv('LLM_MODEL', '')
 embedding_model = os.getenv('EMBEDDING_MODEL')
 device = os.getenv('DEVICE', 'cpu')
-num_gpus = os.getenv('NUM_GPUS', 2)
+num_gpus = int(os.getenv('NUM_GPUS', 2))
 
 llm_role = os.getenv('LLM_ROLE', '')
 

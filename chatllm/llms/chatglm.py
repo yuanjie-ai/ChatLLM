@@ -36,16 +36,16 @@ def load_llm(model_name_or_path="THUDM/chatglm-6b", device='cpu', num_gpus=2):
     return model.eval(), tokenizer
 
 
-def load_llm4chat(model_name_or_path="THUDM/chatglm-6b", device='cpu', num_gpus=2):
+def load_llm4chat(model_name_or_path="THUDM/chatglm-6b", device='cpu', num_gpus=2, **chat_kwargs):
     model, tokenizer = load_llm(model_name_or_path, device, num_gpus)
 
-    def stream_chat(query, history=None, return_history=False, **chat_kwargs):  # 是否增加全量更新 full_update=False,
+    def stream_chat(query, history=None, return_history=False):  # 是否增加全量更新 full_update=False,
         """
         for i in chat('1+1', return_history=False):
             print(i, end='')
         """
         # chat_kwargs 标准化: max_tokens, temperature, top_p
-        chat_kwargs['max_length'] = int(chat_kwargs.get('MAX_TOKENS', 2048))
+        chat_kwargs['max_length'] = int(chat_kwargs.get('max_tokens', 1024 * 8))
 
         idx = 0
         for response, history in model.stream_chat(tokenizer=tokenizer, query=query, history=history, **chat_kwargs):
