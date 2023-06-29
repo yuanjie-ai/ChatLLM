@@ -48,9 +48,8 @@ class ChatBase(object):
         for _ in self.do_chat(query=self.query.strip(), history=_history, return_history=return_history):
             yield _  # (response, history)
 
-    def load_llm(self, model_name_or_path="THUDM/chatglm-6b", device=DEVICE, return_history=False, **kwargs):
+    def load_llm(self, model_name_or_path="THUDM/chatglm-6b", device=DEVICE, **kwargs):
         self.do_chat = load_llm4chat(model_name_or_path, device=device, **kwargs)
-        self.do_chat = partial(self.do_chat, return_history=return_history)
 
     def set_chat_kwargs(self, **kwargs):
         self.do_chat = partial(self.do_chat, **kwargs)

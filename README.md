@@ -16,6 +16,8 @@ pip install -U chatllm
 
 ## Usages
 
+### [目前适配的LLMs](LLMS.md)
+
 ```python
 from chatllm.applications import ChatBase
 
@@ -28,6 +30,7 @@ for i in qa(query='周杰伦是谁', knowledge_base='周杰伦是傻子'):
 ```
 
 ## OpenaiEcosystem
+
 <details markdown="1">
   <summary>Click to 无缝对接openai生态</summary>
 
@@ -35,7 +38,9 @@ for i in qa(query='周杰伦是谁', knowledge_base='周杰伦是傻子'):
 # 服务端
 pip install "chatllm[openai]" && chatllm-run openai <本地模型地址>
 ```
+
 - SDK：`pip install openai`
+
 ```python
 import openai
 
@@ -47,17 +52,18 @@ for c in completion:
     print(c.choices[0].text, end='')
 # 你好👋!我是人工智能助手 ChatGLM-6B,很高兴见到你，欢迎问我任何问题。
 ```
+
 - 客户端：[点击下载chatbox](https://chatboxapp.xyz/)，也可接入客户端
-![客户端](data/imgs/chatbox.png)
+  ![客户端](data/imgs/chatbox.png)
 
 ### [openai_keys](./data/openai_keys.md): `不定期更新免费keys`
+
 </details>
 
 ## ChatPDF
 
 <details markdown="1">
   <summary>Click to ChatPDF</summary>
-
 
 ```shell
 pip install "chatllm[pdf]" && chatllm-run webui --name chatpdf
@@ -91,7 +97,7 @@ for i in qa(query='东北证券主营业务'):
 - ChatGLM-6B 模型硬件需求
 
   | **量化等级**   | **最低 GPU 显存**（推理） | **最低 GPU 显存**（高效参数微调） |
-      | -------------- | ------------------------- | --------------------------------- |
+        | -------------- | ------------------------- | --------------------------------- |
   | FP16（无量化） | 13 GB                     | 14 GB                             |
   | INT8           | 8 GB                     | 9 GB                             |
   | INT4           | 6 GB                      | 7 GB                              |
@@ -160,6 +166,7 @@ for i in qa(query='东北证券主营业务'):
 </details>
 
 ## 交流群
+
 <div align=center>
 <img src="data/imgs/群.png" alt="群" width="250" height="400">
 </div>

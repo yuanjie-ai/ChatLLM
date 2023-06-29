@@ -30,7 +30,10 @@ def load_llm4chat(**kwargs):
             "messages": messages,
             "user": "Betterme"
         }
-        completion = openai.ChatCompletion.create(**{**kwargs, **chat_kwargs})
+        chat_kwargs = {**kwargs, **chat_kwargs}
+        chat_kwargs = {k: chat_kwargs[k] for k in kwargs}  # 过滤不支持的参数
+
+        completion = openai.ChatCompletion.create(**chat_kwargs)
 
         for c in completion:
             _ = c.choices[0].get('delta').get('content', '')
