@@ -37,6 +37,7 @@ https://mp.weixin.qq.com/s/uV4Y_q4GnTUAsRVHxJGxGA
 # embedding: https://huggingface.co/spaces/mteb/leaderboard
 https://instructor-embedding.github.io/
 https://modelscope.cn/models/damo/nlp_corom_sentence-embedding_chinese-base/summary
+https://github.com/JovenChu/embedding_model_test
 
 打榜
 https://aistudio.baidu.com/aistudio/competition/detail/45/0/leaderboard
