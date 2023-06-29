@@ -60,6 +60,16 @@ for c in completion:
 
 </details>
 
+## ChatMind
+
+<details markdown="1">
+  <summary>Click to ChatMind</summary>
+
+```shell
+pip install "chatllm" && chatllm-run webui --name chatmind
+```
+</details>
+
 ## ChatPDF
 
 <details markdown="1">

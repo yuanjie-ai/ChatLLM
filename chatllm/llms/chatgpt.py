@@ -6,7 +6,7 @@
 # @Author       : betterme
 # @WeChat       : meutils
 # @Software     : PyCharm
-# @Description  :
+# @Description  : https://api2d-doc.apifox.cn/api-84787447
 
 from meutils.pipe import *
 
@@ -24,7 +24,7 @@ def load_llm4chat(**kwargs):
         kwargs = {
             "model": "gpt-3.5-turbo-0613",
             "stream": True,
-            "max_tokens": 4000,
+            "max_tokens": None,
             "temperature": None,
             "top_p": None,
             "messages": messages,

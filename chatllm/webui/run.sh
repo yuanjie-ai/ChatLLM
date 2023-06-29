@@ -7,4 +7,4 @@
 # @Description  :
 
 
-streamlit run chatpdf.py
+streamlit run chatmind.py
