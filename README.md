@@ -68,6 +68,8 @@ for c in completion:
 ```shell
 pip install "chatllm" && chatllm-run webui --name chatmind
 ```
+![客户端](data/imgs/chatmind.png)
+
 </details>
 
 ## ChatPDF
