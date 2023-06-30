@@ -68,6 +68,7 @@ for c in completion:
 ```shell
 pip install "chatllm" && chatllm-run webui --name chatmind
 ```
+
 ![客户端](data/imgs/chatmind.png)
 
 </details>
@@ -109,7 +110,7 @@ for i in qa(query='东北证券主营业务'):
 - ChatGLM-6B 模型硬件需求
 
   | **量化等级**   | **最低 GPU 显存**（推理） | **最低 GPU 显存**（高效参数微调） |
-        | -------------- | ------------------------- | --------------------------------- |
+          | -------------- | ------------------------- | --------------------------------- |
   | FP16（无量化） | 13 GB                     | 14 GB                             |
   | INT8           | 8 GB                     | 9 GB                             |
   | INT4           | 6 GB                      | 7 GB                              |
@@ -177,10 +178,10 @@ for i in qa(query='东北证券主营业务'):
 
 </details>
 
-## 交流群
+## [交流群](http://wechat.yanyue.cloud/common/qun/redirect/?qid=449187)
 
 <div align=center>
-<img src="data/imgs/群.png" alt="群" width="250" height="400">
+<img src="data/imgs/群.png" alt="群" width="200" height="200">
 </div>
 
 > 若二维码失效加微信拉群 313303303
