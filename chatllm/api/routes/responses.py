@@ -11,14 +11,13 @@
 from meutils.pipe import *
 
 
-def generate_response(content: str, chat: bool = True):
+def generate_response(id, content: str, chat: bool = True):
     # 客户端会更新这些值
-    _id = uuid.uuid1()  # 内容id
     _time = int(time.time())
 
     if chat:
         return {
-            "id": f"chatcmpl-{_id}",
+            "id": f"chatcmpl-{id}",
             "object": "chat.completion",
             "created": _time,
             "model": "gpt-3.5-turbo-0301",
@@ -34,7 +33,7 @@ def generate_response(content: str, chat: bool = True):
         }
     else:
         return {
-            "id": f"cmpl-{_id}",
+            "id": f"cmpl-{id}",
             "object": "text_completion",
             "created": _time,
             "model": "text-davinci-003",
@@ -54,11 +53,11 @@ def generate_response(content: str, chat: bool = True):
         }
 
 
-def generate_stream_response_start():
+def generate_stream_response_start(id):
     _time = int(time.time())
 
     return {
-        "id": "chatcmpl-77QWpn5cxFi9sVMw56DZReDiGKmcB",
+        "id": f"chatcmpl-{id}",
         "object": "chat.completion.chunk",
         "created": _time,
         "model": "gpt-3.5-turbo-0301",
@@ -66,13 +65,12 @@ def generate_stream_response_start():
     }
 
 
-def generate_stream_response(content: str, chat: bool = True):
-    _id = uuid.uuid1()  # 内容id
+def generate_stream_response(id, content: str, chat: bool = True):
     _time = int(time.time())
 
     if chat:
         return {
-            "id": f"chatcmpl-{_id}",  # TODO
+            "id": f"chatcmpl-{id}",  # TODO
             "object": "chat.completion.chunk",
             "created": _time,
             "model": "gpt-3.5-turbo-0301",
@@ -80,7 +78,7 @@ def generate_stream_response(content: str, chat: bool = True):
         }
     else:
         return {
-            "id": f"cmpl-{_id}",
+            "id": f"cmpl-{id}",
             "object": "text_completion",
             "created": _time,
             "choices": [
@@ -95,13 +93,12 @@ def generate_stream_response(content: str, chat: bool = True):
         }
 
 
-def generate_stream_response_stop(chat: bool = True):
-    _id = uuid.uuid1()  # 内容id
+def generate_stream_response_stop(id, chat: bool = True):
     _time = int(time.time())
 
     if chat:
         return {
-            "id": f"chatcmpl-{_id}",
+            "id": f"chatcmpl-{id}",
             "object": "chat.completion.chunk",
             "created": _time,
             "model": "gpt-3.5-turbo-0301",
@@ -109,7 +106,7 @@ def generate_stream_response_stop(chat: bool = True):
         }
     else:
         return {
-            "id": f"cmpl-{_id}",
+            "id": f"cmpl-{id}",
             "object": "text_completion",
             "created": _time,
             "choices": [

@@ -58,4 +58,4 @@ def completion(
 
 if __name__ == '__main__':
     # completion(prompt='你是谁', chat=True)
-    completion(prompt='你是谁', chat=False)
+    completion(prompt='你是谁', chat=True)

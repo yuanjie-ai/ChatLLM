@@ -46,7 +46,7 @@ def load_llm4chat(model_name_or_path="THUDM/chatglm-6b", device='cpu', num_gpus=
         """
         # chat_kwargs 标准化: max_tokens, temperature, top_p
         chat_kwargs = {**kwargs, **chat_kwargs}
-        chat_kwargs['max_length'] = int(chat_kwargs.get('max_tokens', 1024 * 8))
+        chat_kwargs['max_length'] = int(chat_kwargs.get('max_tokens') or 1024 * 8)
 
         idx = 0
         for response, history in model.stream_chat(tokenizer=tokenizer, query=query, history=history, **chat_kwargs):

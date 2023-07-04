@@ -9,7 +9,7 @@
 # @Description  :
 
 from fastapi import APIRouter, Body, Depends, HTTPException, Request, status, BackgroundTasks
-from fastapi.responses import Response, JSONResponse
+from fastapi.responses import Response, StreamingResponse, JSONResponse
 from sse_starlette import EventSourceResponse
 
 # ME
@@ -26,6 +26,7 @@ router = APIRouter()
 @router.post("/v1/chat/completions")
 async def chat_completions(body: ChatBody, request: Request, background_tasks: BackgroundTasks):
     background_tasks.add_task(torch_gc)
+    _id = uuid.uuid1()
 
     if request.headers.get("Authorization").split(" ")[1] not in tokens:
         raise HTTPException(status.HTTP_401_UNAUTHORIZED, "Token is wrong!")
@@ -64,25 +65,28 @@ async def chat_completions(body: ChatBody, request: Request, background_tasks: B
                 response += _response
                 if first:
                     first = False
-                    yield json.dumps(generate_stream_response_start(), ensure_ascii=False)
-                _ = generate_stream_response(_response)
+                    yield json.dumps(generate_stream_response_start(_id), ensure_ascii=False)
+                _ = generate_stream_response(_id, _response)
                 yield json.dumps(_, ensure_ascii=False)
 
-            yield json.dumps(generate_stream_response_stop(), ensure_ascii=False)
+            yield json.dumps(generate_stream_response_stop(_id), ensure_ascii=False)
             yield "[DONE]"
 
-            content = generate_response(response)
+            content = generate_response(_id, response)
             content['user'] = body.user
             rprint(content)
             background_tasks.add_task(do_db, pd.DataFrame([content]), 'chatcmpl')
 
             if debug: logger.success(content)  # 日志
 
-        return EventSourceResponse(eval_llm(), ping=10000)
+        return (
+            StreamingResponse(eval_llm(), media_type="text/event-stream")
+            if is_open() else EventSourceResponse(eval_llm(), ping=10000)
+        )
     else:
         response = ''.join(do_chat(question, history=history, **chat_kwargs))
 
-        content = generate_response(response)
+        content = generate_response(_id, response)
         content['user'] = body.user
         background_tasks.add_task(do_db, pd.DataFrame([content]), 'chatcmpl')
 
@@ -94,6 +98,8 @@ async def chat_completions(body: ChatBody, request: Request, background_tasks: B
 @router.post("/v1/completions")
 async def completions(body: CompletionBody, request: Request, background_tasks: BackgroundTasks):
     background_tasks.add_task(torch_gc)
+
+    _id = uuid.uuid1()
 
     if request.headers.get("Authorization").split(" ")[1] not in tokens:
         raise HTTPException(status.HTTP_401_UNAUTHORIZED, "Token is wrong!")
@@ -113,13 +119,13 @@ async def completions(body: CompletionBody, request: Request, background_tasks: 
             response = ''  # 方便入库
             for _response in do_chat(question, **chat_kwargs):
                 response += _response
-                _ = generate_stream_response(_response, chat=False)
+                _ = generate_stream_response(_id, _response, chat=False)
                 yield json.dumps(_, ensure_ascii=False)
 
-            yield json.dumps(generate_stream_response_stop(chat=False), ensure_ascii=False)
+            yield json.dumps(generate_stream_response_stop(_id, chat=False), ensure_ascii=False)
             yield "[DONE]"
 
-            content = generate_response(response, chat=False)
+            content = generate_response(_id, response, chat=False)
             content['user'] = body.user
             background_tasks.add_task(do_db, pd.DataFrame([content]), 'cmpl')
 
@@ -129,7 +135,7 @@ async def completions(body: CompletionBody, request: Request, background_tasks: 
     else:
         response = ''.join(do_chat(question, **chat_kwargs))  # 流式合成
 
-        content = generate_response(response, chat=False)
+        content = generate_response(_id, response, chat=False)
         content['user'] = body.user
         background_tasks.add_task(do_db, pd.DataFrame([content]), 'cmpl')
 

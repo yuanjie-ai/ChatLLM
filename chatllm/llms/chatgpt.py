@@ -14,9 +14,6 @@ from meutils.pipe import *
 def load_llm4chat(**kwargs):
     import openai
 
-    openai.api_key = os.getenv("API_KEY", kwargs.get('api_key', 'chatllm'))
-    openai.api_base = os.getenv("API_BASE", kwargs.get('api_base', "https://api.openai-proxy.com/v1"))
-
     def stream_chat(query, history=None, **chat_kwargs):
         history = history or []
         messages = history + [{"role": "user", "content": query}]
