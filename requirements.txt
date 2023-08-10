@@ -1,0 +1,10 @@
+meutils
+transformers
+tokenizers
+sentence_transformers
+accelerate
+
+# chatglm
+cpm_kernels
+
+
