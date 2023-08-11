@@ -18,7 +18,7 @@ from chatllm.llmchain.utils import get_api_key
 class OpenAIEmbeddings(_OpenAIEmbeddings):
     """多key多线程"""
     get_api_key: Callable[[int], List[str]] = get_api_key
-    pre_fn: Optional[Callable[[str], str]] = None,
+    pre_fn: Optional[Callable[[str], str]] = None
 
     # class Config:
     #     """Configuration for this pydantic object."""

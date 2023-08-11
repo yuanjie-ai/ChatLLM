@@ -22,25 +22,25 @@ from langchain.chat_models import ChatOpenAI
 from langchain.chains.question_answering import load_qa_chain
 from langchain.embeddings.base import Embeddings
 from langchain.prompts import ChatPromptTemplate
-from langchain.schema import BaseLanguageModel
-from langchain.vectorstores import VectorStore
+from langchain.schema.language_model import BaseLanguageModel
 
 
 class ChatBase(object):
 
-    def __init__(self,
-                 # 初始化 openai_api_key
-                 llm: Optional[BaseLanguageModel] = None,
-                 embeddings: Optional[Embeddings] = None,
-                 vectorstore: Optional[VectorStore] = None,
+    def __init__(
+        self,
+        # 初始化 openai_api_key
+        llm: Optional[BaseLanguageModel] = None,
+        embeddings: Optional[Embeddings] = None,
+        vectorstore: Optional[Any] = None,
 
-                 collection_name: str = 'TEST',  # todo: 参数设置，llm_kwargs/embeddings_kwargs/vectorstore_kwargs
+        collection_name: str = 'TEST',  # todo: 参数设置，llm_kwargs/embeddings_kwargs/vectorstore_kwargs
 
-                 get_api_key: Optional[Callable[[int], List[str]]] = None,
-                 prompt_template=context_prompt_template,
+        get_api_key: Optional[Callable[[int], List[str]]] = None,
+        prompt_template=context_prompt_template,
 
-                 **kwargs
-                 ):
+        **kwargs
+    ):
         """
 
         :param llm:
@@ -59,7 +59,7 @@ class ChatBase(object):
         _vdb_kwargs = self.vdb_kwargs.copy()
         _vdb_kwargs['embedding_function'] = _vdb_kwargs.pop('embedding')  # 参数一致性
         # _vdb_kwargs['drop_old'] = True # 重新创建
-        self.vectorstore: Optional[Milvus] = vectorstore or Milvus(**_vdb_kwargs)  # 耗时吗
+        self.vectorstore = vectorstore or Milvus(**_vdb_kwargs)  # 耗时吗
 
         # self.vectorstore.collection_name = collection_name # todo: 参数设置
 
@@ -76,6 +76,14 @@ class ChatBase(object):
 
     def pipeline(self):
         pass
+
+    def create_index(self, docs: List[Document], **kwargs):
+        """初始化 drop_old=True"""
+        if isinstance(self.vectorstore, Milvus):
+            self.vectorstore = self.vectorstore.from_documents(docs, **{**self.vdb_kwargs, **kwargs})
+        else:
+            self.vectorstore = self.vectorstore.from_documents(docs)
+
 
     def llm_qa(self, query: str, k: int = 5, threshold: float = 0.5, **kwargs: Any):
         """todo: pipeline"""
@@ -106,11 +114,6 @@ class ChatBase(object):
         )
         docs = loader.load_and_split(textsplitter)
         return docs
-
-    # @diskcache(location=os.getenv('INSERT_VECTOR_CACHE', '~/.cache/insert_vector_cache'), ignore=['self'])
-    def create_index(self, docs: List[Document], **kwargs):
-        """初始化 drop_old=True"""
-        self.vectorstore = Milvus.from_documents(docs, **{**self.vdb_kwargs, **kwargs})
 
     @property
     def vdb_kwargs(self):

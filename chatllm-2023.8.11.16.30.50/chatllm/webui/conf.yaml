@@ -1,0 +1,5 @@
+cachedir: pdf_cache
+encode_model: moka-ai/m3e-base
+llm: /Users/betterme/PycharmProjects/AI/CHAT_MODEL/chatglm
+threshold: 0.66
+topk: 3
