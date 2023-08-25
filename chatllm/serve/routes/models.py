@@ -11,7 +11,7 @@
 from meutils.pipe import *
 from fastapi import APIRouter, Body, Depends, HTTPException
 from chatllm.serve.routes.utils import check_api_key
-from chatllm.datamodels.openai_api_protocol import *
+from chatllm.schemas.openai_api_protocol import *
 
 router = APIRouter()
 

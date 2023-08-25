@@ -5,7 +5,7 @@ git init
 git add *
 #git commit -m "add: 支持chatbox客户端"
 #git commit -m "fix: pandas2.0 `df.drop` bug"
-git commit -m "add:  支持文心、星火api"
+git commit -m "add:  UnstructuredImageLoader-PaddleOCR"
 
 #git remote add origin git@github.com:yuanjie-ai/llm4gpt.git
 #git branch -M master

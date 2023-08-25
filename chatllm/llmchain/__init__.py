@@ -14,12 +14,12 @@ from meutils.cache_utils import diskcache, joblib_cache
 
 
 @lru_cache
-def init(verbose=-1):
-    CACHE = os.getenv("CHATLLM_CACHE", "~/.cache/chatllm_cache")
+def init_cache(verbose=-1):
+    CACHE = os.getenv("CHATLLM_CACHE", "~/.cache/chatllm")
 
     openai.Embedding.create = diskcache(
         openai.Embedding.create,
-        location=f"{CACHE}__openai.Embedding.create",
+        location=f"{CACHE}/openai.Embedding.create",
         verbose=verbose,
     )
 
@@ -28,7 +28,8 @@ def init(verbose=-1):
         from sentence_transformers import SentenceTransformer
         SentenceTransformer.encode = diskcache(
             SentenceTransformer.encode,
-            location=f"{CACHE}__SentenceTransformer",
+            location=f"{CACHE}/SentenceTransformer.encode",
+            ignore=['self'],
             verbose=verbose,
         )
     except Exception as e:
@@ -63,7 +64,6 @@ def init(verbose=-1):
 
 
 if __name__ == '__main__':
-    init()
     from langchain.embeddings import OpenAIEmbeddings
 
     print(OpenAIEmbeddings().embed_query(text='chatllmxxx'))

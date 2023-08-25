@@ -8,6 +8,8 @@
 # @Software     : PyCharm
 # @Description  :
 
-from chatllm.llmchain.vectorstores.faiss import FAISS
-from chatllm.llmchain.vectorstores.milvus import Milvus
+from chatllm.llmchain.vectorstores.FAISS import FAISS
+from chatllm.llmchain.vectorstores.Milvus import Milvus
+from chatllm.llmchain.vectorstores.Usearch import USearch
+
 from chatllm.llmchain.vectorstores.DocArrayInMemorySearch import DocArrayInMemorySearch

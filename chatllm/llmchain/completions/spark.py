@@ -23,7 +23,7 @@ from urllib.parse import urlparse, urlencode
 
 # ME
 from meutils.pipe import *
-from chatllm.datamodels.openai_api_protocol import *
+from chatllm.schemas.openai_api_protocol import *
 
 
 class SparkBotCompletion(object):
@@ -201,7 +201,7 @@ if __name__ == '__main__':
     # appid, api_key, secret_key = api_key.split(':')
     # print(SparkBotCompletion.create_url(api_key, secret_key))
 
-    kw = {'model': 'gpt-3.5-turbo', 'request_timeout': None, 'max_tokens': None, 'stream': False, 'n': 1,
+    kw = {'model': 'gpt-3.5-turbo', 'request_timeout': None, 'max_tokens': None, 'stream': True, 'n': 1,
           'temperature': 0.7, 'api_key': api_key, 'api_base': 'https://api.openai-proxy.com/v1', 'organization': ''}
     g = SparkBotCompletion.create([{'role': 'user', 'content': '1+1'}], **kw)
     rprint(g)

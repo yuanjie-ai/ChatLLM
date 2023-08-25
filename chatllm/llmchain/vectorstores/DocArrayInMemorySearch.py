@@ -28,6 +28,6 @@ class DocArrayInMemorySearch(_DocArrayInMemorySearch):
         docs = []
         for doc, score in docs_scores:
             if score > threshold:
-                doc.metadata['score'] = score
+                doc.metadata['score'] = round(score, 2)
                 docs.append(doc)
         return docs

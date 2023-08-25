@@ -32,14 +32,14 @@ class Summarizer(object):
         if sum((len(doc.page_content) for doc in docs)) > max_tokens:
             chain_type = 'map_reduce'
 
-        logger.info(chain_type)
+        logger.debug(chain_type)
 
-        chain = load_summarize_chain(
+        self.chain = load_summarize_chain(
             self.llm,
             chain_type=chain_type,
             prompt=ChatPromptTemplate.from_template(prompt_template)
         )
-        return chain.run(docs)
+        return self.chain.run(docs)
 
     @staticmethod
     def load_file(
@@ -67,5 +67,14 @@ if __name__ == '__main__':
 
     docs = s.load_file('/Users/betterme/PycharmProjects/AI/ChatLLM/data/姚明.txt')
 
-    print(s.generate(docs))
-    print(s.generate(docs, prompt_template=question_generation_prompt_template))
+    # print(s.generate(docs))
+    # print(s.generate(docs, prompt_template=question_generation_prompt_template))
+
+    chain = load_summarize_chain(
+        s.llm,
+        prompt=ChatPromptTemplate.from_template(summary_prompt_template)
+    )
+    # print(chain.run(docs))
+    # print(chain.run({'input_documents': docs, "question": None}))
+    print(chain.run({'input_documents': docs, "question": '你是谁？'}))
+

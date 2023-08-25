@@ -10,7 +10,7 @@
 
 import streamlit as st
 from meutils.pipe import *
-from meutils.serving.st_utils import display_pdf, st_chat, set_config
+from meutils.serving.streamlit import display_pdf, st_chat, set_config
 
 from chatllm.applications.chatpdf import ChatPDF
 

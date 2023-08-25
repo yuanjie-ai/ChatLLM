@@ -8,4 +8,4 @@
 
 
 #streamlit run chatmind.py
-streamlit run st_chat.py
+streamlit run chatfile.py

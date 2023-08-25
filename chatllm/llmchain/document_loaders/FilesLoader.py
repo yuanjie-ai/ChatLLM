@@ -6,12 +6,13 @@
 # @Author       : betterme
 # @WeChat       : meutils
 # @Software     : PyCharm
-# @Description  : todo:
+# @Description  : todo: 文件流
 
 from meutils.pipe import *
 from langchain.text_splitter import *
 from langchain.document_loaders import *
 from langchain.document_loaders.base import Document, BaseLoader
+from chatllm.llmchain.document_loaders import TextLoader, Docx2txtLoader, PyMuPDFLoader
 
 
 class FilesLoader(BaseLoader):
@@ -28,7 +29,7 @@ class FilesLoader(BaseLoader):
         return self.file_paths | xmap(str) | xProcessPoolExecutor(self._load_file, self._max_workers) | xchain_
 
     @staticmethod
-    def _load_file(filepath) -> List[Document]:
+    def _load_file(filepath) -> List[Document]:  # 重写
         file = str(filepath).lower()
         if file.endswith((".txt",)):
             docs = TextLoader(filepath, autodetect_encoding=True).load()
@@ -47,7 +48,7 @@ class FilesLoader(BaseLoader):
             docs = CSVLoader(filepath).load()
 
         else:
-            docs = UnstructuredFileLoader(filepath, mode='single', strategy="fast").load()
+            docs = UnstructuredFileLoader(filepath, mode='single', strategy="fast").load()  # todo： 临时文件
 
         # schema: file_type todo: 增加字段
         # 静态schema怎么设计存储，支持多文档：metadata存文件名字段（可以放多层级）

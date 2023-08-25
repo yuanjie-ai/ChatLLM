@@ -51,14 +51,15 @@ if __name__ == '__main__':
 
     llm = ChatOpenAI(streaming=True, temperature=0)  # 很重要：streaming=True
 
-    for i in llm_stream(llm.predict)('周杰伦是谁'):
-        print(i, end='')
-
-
-    async def main():
-        print('\n####################异步####################\n')
-        async for i in llm_astream(llm.apredict)('周杰伦是谁'):
+    with timer('stream'):
+        for i in llm_stream(llm.predict)('周杰伦是谁'):
             print(i, end='')
 
+    with timer('astream'):
+        async def main():
+            print('\n####################异步####################\n')
+            async for i in llm_astream(llm.apredict)('周杰伦是谁'):
+                print(i, end='')
 
-    asyncio.run(main())
+
+        asyncio.run(main())

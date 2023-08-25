@@ -13,7 +13,7 @@ from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from fastapi.responses import JSONResponse, UJSONResponse
 from fastchat.constants import ErrorCode
 
-from chatllm.datamodels.openai_api_protocol import *
+from chatllm.schemas.openai_api_protocol import *
 from meutils.pipe import *
 
 get_bearer_token = HTTPBearer(auto_error=False)

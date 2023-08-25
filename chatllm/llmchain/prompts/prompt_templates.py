@@ -8,6 +8,19 @@
 # @Software     : PyCharm
 # @Description  :
 
+from langchain.prompts import SystemMessagePromptTemplate, HumanMessagePromptTemplate, ChatPromptTemplate
+
+# context=ocr_result, keys=question # 开票日期,开票人,收款人
+ocr_prompt_template = """
+你现在的任务是从OCR文字识别的结果中提取我指定的关键信息。
+OCR的文字识别结果使用```符号包围，包含所识别出来的文字，顺序在原始图片中从左至右、从上至下。我指定的关键信息使用[]符号包围。
+请注意OCR的文字识别结果可能存在长句子换行被切断、不合理的分词、对应错位等问题，你需要结合上下文语义进行综合判断，以抽取准确的关键信息。
+在返回结果时使用json格式，包含一个key-value对，key值为我指定的关键信息，value值为所抽取的结果。
+如果认为OCR识别结果中没有关键信息key，则将value赋值为“未找到相关信息”。 请只输出json格式的结果，不要包含其它多余文字！
+Let's think step by step, 下面正式开始：
+OCR文字：```{context}```
+要抽取的关键信息：[{question}]。
+""".strip()
 
 context_prompt_template = """
 根据以下信息，简洁、专业地回答用户的问题。如果无法得到答案，请回复：“根据已知信息无法回答该问题”或“没有提供足够的信息”。请勿编造信息，答案必须使用中文。
@@ -51,3 +64,43 @@ Let's think step by step, 根据输入文本生成最相关的5个问题：
 
 请马上以阅读理解模型的身份开始。
 """.strip()
+
+# https://mp.weixin.qq.com/s/rtdTnlrZHuHjB1paUNTssQ
+system_template = """
+你将会得到一个由三个引号分隔的文档内容和一个问题，请使用三个引号内的内容，简洁、专业地回答用户的问题。
+如果无法得到答案，请回复：“根据已知信息无法回答该问题”或“没有提供足够的信息”。请勿编造信息，答案必须使用中文。
+""".strip()
+
+messages = [
+    SystemMessagePromptTemplate.from_template(system_template),
+    HumanMessagePromptTemplate.from_template('"""{context}"""\n问题：{question}'),
+]
+CHAT_CONTEXT_PROMPT = ChatPromptTemplate.from_messages(messages)
+
+system_template = """
+你将会得到一个由三个引号分隔的文档内容和一个问题。
+你的任务是只使用提供的文档内容来回答问题，并引用“用于回答问题的文档内容段落”。
+如果文档内容中没有包含用于回答该问题所需的信息，则简单地返回：“信息不足”。
+如果文档内容中提供了问题的答案，则必须使用“引文”进行注释。使用以下格式引用相关的段落。("引文": …)
+""".strip()
+
+messages = [
+    SystemMessagePromptTemplate.from_template(system_template),
+    HumanMessagePromptTemplate.from_template('"""{context}"""\n问题：{question}'),
+]
+CHAT_CONTEXT_PROMPT_WITH_SOURCE = ChatPromptTemplate.from_messages(messages)
+
+if __name__ == '__main__':
+    from meutils.pipe import *
+    from langchain.chat_models import ChatOpenAI
+    from langchain.chains import LLMChain
+
+    llm = ChatOpenAI()
+    prompt = CHAT_CONTEXT_PROMPT_WITH_SOURCE
+
+    context = """
+2022年的某一天，李明开着摩托车去给客户送货，路上遇到了一只小狗，他停下车去看了一下小狗，回去开车的时候货物不见了。李明在2023年进了一批货物，货物里面居然有一只小狗。
+    """
+
+    c = LLMChain(llm=llm, prompt=prompt)
+    print(c.run(context=context, question="2022年李明开摩托车遇到了什么动物？"))

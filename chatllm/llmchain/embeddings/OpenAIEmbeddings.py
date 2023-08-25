@@ -64,6 +64,7 @@ class OpenAIEmbeddings(_OpenAIEmbeddings):
 
 if __name__ == '__main__':
     e = OpenAIEmbeddings(chunk_size=5)
+
     e.get_api_key = partial(get_api_key, n=2)
     # e.openai_api_key = 'xxx'
     print(e.get_api_key())

@@ -11,7 +11,7 @@
 from meutils.pipe import *
 from meutils.cache_utils import ttl_cache
 from meutils.decorators.retry import retrying
-from chatllm.datamodels.openai_api_protocol import *
+from chatllm.schemas.openai_api_protocol import *
 
 
 class ErnieBotCompletion(object):
@@ -24,6 +24,7 @@ class ErnieBotCompletion(object):
     ):
         print(kwargs)
         api_key, secret_key = kwargs.pop('api_key').split(':')
+
         post_kwargs = {
             'url': cls.create_url(api_key, secret_key, **kwargs),
             'json': {
@@ -32,7 +33,7 @@ class ErnieBotCompletion(object):
                 'stream': kwargs.get('stream'),
                 'temperature': np.clip(kwargs.get('temperature', 0), 0.01, 1),
             },
-            'stream': kwargs.get('stream')
+            # 'stream': kwargs.get('stream')
         }
 
         response = requests.post(**post_kwargs)
@@ -93,6 +94,8 @@ class ErnieBotCompletion(object):
             ####################################################################################
 
             yield stream_resp
+        stream_resp['choices'][0]['finish_reason'] = 'stop'
+        yield stream_resp
 
         # stream_resp['choices'][0]['finish_reason'] = 'stop'
         # yield stream_resp
@@ -114,7 +117,7 @@ class ErnieBotCompletion(object):
         response = requests.request("POST", url)
         access_token = response.json().get("access_token")
 
-        if 'ernie-bot-turbo' in kwargs.get('model', 'ernie-bot-turbo-0725'):
+        if 'ernie-bot' in kwargs.get('model', 'ernie-bot-turbo-0725'):
             route = 'eb-instant'
         else:
             route = 'completions'
@@ -136,3 +139,4 @@ if __name__ == '__main__':
     print(r)
     for i in r:
         print(i)
+

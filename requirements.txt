@@ -1,7 +1,12 @@
 meutils
+
+openai
+tiktoken
+langchain
+
 transformers
-tokenizers
 sentence_transformers
+tokenizers
 accelerate
 
 # chatglm

@@ -8,5 +8,11 @@
 # @Software     : PyCharm
 # @Description  :
 
+
+from chatllm.llmchain.document_loaders.text import TextLoader
 from chatllm.llmchain.document_loaders.pdf import PyMuPDFLoader
+from chatllm.llmchain.document_loaders.docx import Docx2txtLoader
+from chatllm.llmchain.document_loaders.image import UnstructuredImageLoader
+
+from chatllm.llmchain.document_loaders.file import FileLoader
 from chatllm.llmchain.document_loaders.FilesLoader import FilesLoader

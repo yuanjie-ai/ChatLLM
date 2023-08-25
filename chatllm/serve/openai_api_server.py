@@ -44,7 +44,7 @@ from fastchat.constants import (
 from fastchat.conversation import Conversation, SeparatorStyle
 from fastchat.model.model_adapter import get_conversation_template
 from fastapi.exceptions import RequestValidationError
-from chatllm.datamodels.openai_api_protocol import (
+from chatllm.schemas.openai_api_protocol import (
     ChatCompletionRequest,
     ChatCompletionResponse,
     ChatCompletionResponseStreamChoice,

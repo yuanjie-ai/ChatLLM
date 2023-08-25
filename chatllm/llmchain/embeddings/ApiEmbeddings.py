@@ -7,7 +7,6 @@
 # @WeChat       : meutils
 # @Software     : PyCharm
 # @Description  :
-import requests
 
 from meutils.pipe import *
 from meutils.decorators.retry import retrying

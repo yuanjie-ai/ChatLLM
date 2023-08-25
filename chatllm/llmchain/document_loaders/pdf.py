@@ -8,73 +8,47 @@
 # @Software     : PyCharm
 # @Description  :
 
-from meutils.pipe import *
 from langchain.document_loaders.parsers.pdf import BaseBlobParser, Blob, Document
 from langchain.document_loaders.pdf import PyMuPDFLoader as _PyMuPDFLoader
+
+from meutils.pipe import *
+from meutils.fileparser import stream_parser
 
 
 class PyMuPDFLoader(_PyMuPDFLoader):
     """Loader that uses PyMuPDF to load PDF files."""
 
+    def __init__(self, file_path: Any) -> None:
+        """Initialize with a file path."""
+        try:
+            import fitz  # noqa:F401
+        except ImportError:
+            raise ImportError(
+                "`PyMuPDF` package not found, please install it with "
+                "`pip install pymupdf`"
+            )
+
+        self.file_path = file_path
+
     def load(self, **kwargs: Optional[Any]) -> List[Document]:
-        """Load file."""
+        if (
+            isinstance(self.file_path, (str, os.PathLike))
+            and len(self.file_path) < 256
+            and Path(self.file_path).is_file()
+        ):
+            return _PyMuPDFLoader(self.file_path).load()  # 按页
 
-        parser = PyMuPDFParser(text_kwargs=kwargs, page_preprocessing=self.page_preprocessing)
-
-        blob = Blob.from_path(self.file_path)
-        return parser.parse(blob)
+        filename, file_stream = stream_parser(self.file_path)
+        text, metadata = self.get_text(file_stream)
+        return [Document(page_content=text, metadata=metadata)]
 
     @staticmethod
-    @lru_cache(1024)
-    def page_preprocessing(page_content, re_parser=None):  # todo: 丰富预处理逻辑
-        page_content = page_content.strip().lower()
-        if re_parser:
-            page_content = re_parser.sub(page_content, '')
-
-        return page_content
-
-
-class PyMuPDFParser(BaseBlobParser):
-    """Parse PDFs with PyMuPDF."""
-
-    def __init__(self, text_kwargs: Optional[Mapping[str, Any]] = None, page_preprocessing=None) -> None:
-        """Initialize the parser.
-
-        Args:
-            text_kwargs: Keyword arguments to pass to ``fitz.Page.get_text()``.
-        """
-        self.text_kwargs = text_kwargs or {}
-        self.page_preprocessing = page_preprocessing
-
-    def lazy_parse(self, blob: Blob) -> Iterator[Document]:
-        """Lazily parse the blob."""
+    def get_text(stream):
         import fitz
+        doc = fitz.Document(stream=stream)
+        return '\n'.join(page.get_text().strip() for page in doc), {'total_pages': len(doc), **doc.metadata}
 
-        with blob.as_bytes_io() as file_path:
-            doc = fitz.open(file_path)  # open document
 
-            for page in doc:
-                page_content = page.get_text(**self.text_kwargs).strip()
-                page_content = self.page_preprocessing(page_content)  # 文本预处理
-                if not page_content:
-                    continue
-
-                yield Document(
-                    page_content=page_content,
-                    metadata={
-                        **{
-                            "source": blob.source,
-                            "file_path": blob.source,
-                            "page": page.number,
-                            "total_pages": len(doc),
-
-                            "page_length": len(page_content),  #
-
-                        },
-                        **{
-                            k: doc.metadata[k]
-                            for k in doc.metadata
-                            if type(doc.metadata[k]) in [str, int]
-                        },
-                    },
-                )
+if __name__ == '__main__':
+    f = open('/Users/betterme/PycharmProjects/AI/ChatLLM/data/中职职教高考政策解读.pdf')
+    print(PyMuPDFLoader(f).load())
