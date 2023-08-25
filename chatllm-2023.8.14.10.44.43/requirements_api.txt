@@ -1,4 +1,0 @@
-openai
-fastapi
-sse-starlette
-

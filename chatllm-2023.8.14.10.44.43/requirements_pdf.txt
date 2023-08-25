@@ -1,3 +1,0 @@
-pymupdf
-streamlit
-streamlit_chat
