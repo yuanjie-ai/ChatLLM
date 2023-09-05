@@ -112,7 +112,7 @@ if __name__ == '__main__':
     faiss1 = FAISS.from_texts(['1', '2', '3'], embeddings)
     faiss2 = FAISS.from_texts(['11', '22', '33'], embeddings)
     faiss1.merge_from(faiss2)
-    faiss1.similarity_search('1')
+    print(faiss1.similarity_search('1'))
 
-    faiss1.save_local('faiss_data')
-    faiss1 = FAISS.load_local('faiss_data', embeddings)
+    # faiss1.save_local('faiss_data')
+    # faiss1 = FAISS.load_local('faiss_data', embeddings)

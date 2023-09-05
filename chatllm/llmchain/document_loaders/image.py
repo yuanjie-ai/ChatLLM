@@ -16,6 +16,8 @@ from unstructured.partition.text import partition_text
 
 
 def get_ocr_text(file=None, filename=None):
+    try_import('rapidocr_onnxruntime')
+
     from rapidocr_onnxruntime import RapidOCR
 
     ocr_fn = RapidOCR()  # 增加api逻辑
@@ -68,3 +70,4 @@ if __name__ == '__main__':
         strategy='ocr_only'
     )
     data = loader.load()
+    print(data)

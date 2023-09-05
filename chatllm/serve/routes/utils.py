@@ -21,6 +21,8 @@ get_bearer_token = HTTPBearer(auto_error=False)
 api_keys: Set[str] = {'chatllm'}
 
 models = []
+
+
 async def check_api_key(
     auth: Optional[HTTPAuthorizationCredentials] = Depends(get_bearer_token),
 ) -> str:
@@ -48,13 +50,12 @@ def create_error_response(code: int, message: str) -> JSONResponse:
     )
 
 
-
-
 async def check_model(request) -> Optional[JSONResponse]:
-        ret = create_error_response(
-            ErrorCode.INVALID_MODEL,
-            f"Only {'&&'.join(models)} allowed now, your model {request.model}",
-        )
+    ret = create_error_response(
+        ErrorCode.INVALID_MODEL,
+        f"Only {'&&'.join(models)} allowed now, your model {request.model}",
+    )
+
     return ret
 
 

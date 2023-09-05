@@ -5,6 +5,7 @@ include LICENSE
 include README*
 
 recursive-include tests *
+recursive-exclude data *
 recursive-exclude * __pycache__
 recursive-exclude * *.py[co]
 recursive-exclude docs *

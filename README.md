@@ -60,6 +60,25 @@ for c in completion:
 
 </details>
 
+## ChatOCR
+
+<details markdown="1">
+  <summary>Click to ChatOCR</summary>
+
+```python
+from meutils.pipe import *
+from chatllm.llmchain.applications import ChatOCR
+
+llm = ChatOCR()
+file_path = "data/invoice.jpg"
+llm.display(file_path, 700)
+llm.chat('识别编号,公司名称,开票日期,开票人,收款人,复核人,金额', file_path=file_path) | xprint
+```
+
+![ocr](data/imgs/chatocr.png)
+
+</details>
+
 ## ChatMind
 
 <details markdown="1">
@@ -109,12 +128,11 @@ for i in qa(query='东北证券主营业务'):
 
 - ChatGLM-6B 模型硬件需求
 
-  | **量化等级**   | **最低 GPU 显存**（推理） | **最低 GPU 显存**（高效参数微调） |
-          | -------------- | ------------------------- | --------------------------------- |
-  | FP16（无量化） | 13 GB                     | 14 GB                             |
-  | INT8           | 8 GB                     | 9 GB                             |
-  | INT4           | 6 GB                      | 7 GB                              |
-
+| **量化等级**  | **最低 GPU 显存**（推理） | **最低 GPU 显存**（高效参数微调） |
+|-----------|-------------------|-----------------------|
+| FP16（无量化） | 13 GB             | 14 GB                 |
+| INT8      | 8 GB              | 9 GB                  |
+| INT4      | 6 GB              | 7 GB                  |
 
 - 从本地加载模型
     - [安装指南](docs/INSTALL.md)

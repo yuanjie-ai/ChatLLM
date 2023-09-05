@@ -6,29 +6,38 @@
 # @Author       : betterme
 # @WeChat       : meutils
 # @Software     : PyCharm
-# @Description  : https://aistudio.baidu.com/modelsdetail?modelId=332
+# @Description  : 基于LLM+OCR技术的通用文本图像智能分析系统 https://aistudio.baidu.com/modelsdetail?modelId=332
 
 from meutils.pipe import *
-from IPython.display import Image
-from langchain.chat_models import ChatOpenAI
+from chatllm.llmchain.applications.chatbase import ChatBase
+from chatllm.llmchain.prompts.ocr import ocr_ie_prompt, ocr_qa_prompt
+from chatllm.llmchain.document_loaders import UnstructuredImageLoader
 
-llm = ChatOpenAI()
 
-from rapidocr_onnxruntime import RapidOCR
+class ChatOCR(ChatBase):
 
-rapid_ocr = RapidOCR()
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
 
-p = "/Users/betterme/PycharmProjects/AI/MeUtils/meutils/ai_cv/invoice.jpg"
-ocr_result, _ = rapid_ocr(p)
-Image(p)
+    def chat(self, prompt, file_path=None, prompt_type: Literal['qa', 'ie'] = 'ie'):
+        prompt = ocr_ie_prompt.format(context=self.context(file_path), question=prompt)
+        return super().chat(prompt)
 
-key = '识别编号,公司名称,开票日期,开票人,收款人,复核人,金额'
+    @lru_cache()
+    def context(self, file_path):  # todo: 增加 baidu api & qa 问答
+        docs = UnstructuredImageLoader(file_path, strategy='ocr_only').load()
+        return docs[0].page_content
 
-prompt = f"""你现在的任务是从OCR文字识别的结果中提取我指定的关键信息。OCR的文字识别结果使用```符号包围，包含所识别出来的文字，
-顺序在原始图片中从左至右、从上至下。我指定的关键信息使用[]符号包围。请注意OCR的文字识别结果可能存在长句子换行被切断、不合理的分词、
-对应错位等问题，你需要结合上下文语义进行综合判断，以抽取准确的关键信息。
-在返回结果时使用json格式，包含一个key-value对，key值为我指定的关键信息，value值为所抽取的结果。
-如果认为OCR识别结果中没有关键信息key，则将value赋值为“未找到相关信息”。 请只输出json格式的结果，不要包含其它多余文字！下面正式开始：
-OCR文字：```{ocr_result}```
-要抽取的关键信息：[{key}]。"""
-print(llm.predict(prompt))
+    def display(self, file_path, width=600):
+        from IPython.display import Image
+        return Image(file_path, width=width)
+
+
+if __name__ == '__main__':
+    from meutils.pipe import *
+    from chatllm.llmchain.applications import ChatOCR
+
+    llm = ChatOCR()
+    file_path = "/Users/betterme/PycharmProjects/AI/MeUtils/meutils/ai_cv/invoice.jpg"
+    llm.chat('识别编号,公司名称,开票日期,开票人,收款人,复核人,金额', file_path=file_path) | xprint
+    print(llm.display(file_path, 700))

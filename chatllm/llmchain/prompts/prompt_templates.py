@@ -10,28 +10,18 @@
 
 from langchain.prompts import SystemMessagePromptTemplate, HumanMessagePromptTemplate, ChatPromptTemplate
 
-# context=ocr_result, keys=question # 开票日期,开票人,收款人
-ocr_prompt_template = """
-你现在的任务是从OCR文字识别的结果中提取我指定的关键信息。
-OCR的文字识别结果使用```符号包围，包含所识别出来的文字，顺序在原始图片中从左至右、从上至下。我指定的关键信息使用[]符号包围。
-请注意OCR的文字识别结果可能存在长句子换行被切断、不合理的分词、对应错位等问题，你需要结合上下文语义进行综合判断，以抽取准确的关键信息。
-在返回结果时使用json格式，包含一个key-value对，key值为我指定的关键信息，value值为所抽取的结果。
-如果认为OCR识别结果中没有关键信息key，则将value赋值为“未找到相关信息”。 请只输出json格式的结果，不要包含其它多余文字！
-Let's think step by step, 下面正式开始：
-OCR文字：```{context}```
-要抽取的关键信息：[{question}]。
-""".strip()
-
 context_prompt_template = """
 根据以下信息，简洁、专业地回答用户的问题。如果无法得到答案，请回复：“根据已知信息无法回答该问题”或“没有提供足够的信息”。请勿编造信息，答案必须使用中文。
 
 已知信息：
+```
 {context}
+```
 
 问题：
 {question}
 
-Let's think step by step, 根据已知信息准确生成问题的答案：
+让我们一步一步思考并回答：
 """.strip()  # Let's think step by step
 
 summary_prompt_template = """

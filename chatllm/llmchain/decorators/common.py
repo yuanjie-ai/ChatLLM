@@ -46,20 +46,39 @@ async def llm_astream(func, *args, **kwargs):
         yield token
 
 
+@decorator
+async def llm_astream(func, *args, **kwargs):
+    """
+    async for i in llm_astream(llm.apredict)('周杰伦是谁'):
+        print(i, end='')
+    """
+    handler = AsyncIteratorCallbackHandler()
+    kwargs['callbacks'] = [handler]
+
+    task = asyncio.create_task(func(*args, **kwargs))
+    async for token in handler.aiter():
+        yield token
+
+
 if __name__ == '__main__':
     from langchain.chat_models import ChatOpenAI
 
     llm = ChatOpenAI(streaming=True, temperature=0)  # 很重要：streaming=True
 
-    with timer('stream'):
-        for i in llm_stream(llm.predict)('周杰伦是谁'):
+    # with timer('stream'):
+    #     for i in llm_stream(llm.predict)('周杰伦是谁'):
+    #         print(i, end='')
+    #
+    # with timer('老异步请求'):
+    #     async def main():
+    #         print('\n####################异步####################\n')
+    #         async for i in llm_astream(llm.apredict)('周杰伦是谁'):
+    #             print(i, end='')
+    #
+    #
+    #     asyncio.run(main())
+
+    with timer('新异步请求'):
+        gen = llm_astream(llm.apredict)('周杰伦是谁')
+        for i in async2sync_generator(gen):
             print(i, end='')
-
-    with timer('astream'):
-        async def main():
-            print('\n####################异步####################\n')
-            async for i in llm_astream(llm.apredict)('周杰伦是谁'):
-                print(i, end='')
-
-
-        asyncio.run(main())

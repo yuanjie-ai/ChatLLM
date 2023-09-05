@@ -7,18 +7,31 @@
 # @WeChat       : meutils
 # @Software     : PyCharm
 # @Description  :
+import time
 
 import streamlit as st
 
 from meutils.pipe import *
 
 from chatllm.llmchain import init_cache
-from chatllm.llmchain.applications import ChatBase
+from chatllm.llmchain.applications import ChatFile
 from chatllm.llmchain.document_loaders import FileLoader
 from chatllm.llmchain.embeddings import OpenAIEmbeddings
-from chatllm.llmchain.llms import SparkBot
+from chatllm.llmchain.prompts.prompt_templates import CHAT_CONTEXT_PROMPT_WITH_SOURCE
 
 init_cache(1)
+
+context_prompt_template = """
+根据以下信息，简洁、专业地回答用户的问题。如果无法得到答案，请回复：“根据已知信息无法回答该问题”或“没有提供足够的信息”。请勿编造信息，答案必须使用中文。
+
+已知信息：
+{context}
+
+问题：
+{question}
+
+让我们一步一步思考并回答：
+""".strip()  # Let's think step by step
 
 
 class ChatMessage(BaseModel):
@@ -83,11 +96,12 @@ def get_reply_func(file):
     if file:
         docs = FileLoader(file, file.name).load_and_split()
         print(file.name, len(docs))
+        from chatllm.llmchain.vectorstores import Milvus, FAISS
 
-        cb = ChatBase(embeddings=OpenAIEmbeddings(chunk_size=20))
+        cb = ChatFile(embeddings=OpenAIEmbeddings(chunk_size=20), prompt_template=context_prompt_template)
         cb.create_index(docs)
 
-        reply_func = lambda query: cb.llm_qa(query=query, k=3, threshold=0.7)
+        reply_func = lambda query: cb.llm_qa(query=query, k=5, threshold=0.5)
 
         return reply_func
 
@@ -110,6 +124,7 @@ if __name__ == '__main__':
     st.markdown('# 📔基于本地知识库问答')
 
     file = st.file_uploader("Choose a file", type=['pdf', 'doc', 'docx', 'txt', ], help='目前仅支持单文档问答')
+    print(f"{time.ctime()}: {file}")
     with st.spinner('AI正在处理...'):
         reply_func = get_reply_func(file)
 

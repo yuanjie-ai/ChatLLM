@@ -31,5 +31,7 @@ if __name__ == '__main__':
 
     context = json.dumps(OCR.basic_accurate(img), ensure_ascii=False)
 
-    c = LLMChain(llm=llm, prompt=prompt)
-    print(c.run(context=context, question="出生日期是？"))
+    # c = LLMChain(llm=llm, prompt=prompt)
+    # print(c.run(context=context, question="出生日期是？"))
+
+    print(context)

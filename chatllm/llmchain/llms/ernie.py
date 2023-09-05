@@ -76,6 +76,3 @@ if __name__ == '__main__':
 
     c = LLMChain(llm=llm, prompt=prompt)
     print(c.run(question='灭霸是谁', context='灭霸是周杰伦'))
-
-    from langchain.chains.summarize import load_summarize_chain
-
