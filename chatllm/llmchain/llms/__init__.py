@@ -10,3 +10,4 @@
 
 from chatllm.llmchain.llms.ernie import ErnieBot
 from chatllm.llmchain.llms.spark import SparkBot
+from chatllm.llmchain.llms.chatglm import ChatGLM

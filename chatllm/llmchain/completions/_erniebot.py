@@ -1,17 +1,28 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 # @Project      : AI.  @by PyCharm
-# @File         : ernie
-# @Time         : 2023/7/31 16:34
+# @File         : erniebot
+# @Time         : 2023/9/7 10:36
 # @Author       : betterme
 # @WeChat       : meutils
 # @Software     : PyCharm
-# @Description  : https://cloud.baidu.com/doc/WENXINWORKSHOP/s/flfmc9do2
+# @Description  :
 
 from meutils.pipe import *
 from meutils.cache_utils import ttl_cache
 from meutils.decorators.retry import retrying
 from chatllm.schemas.openai_api_protocol import *
+
+import erniebot
+
+models = erniebot.Model.list()
+# Set authentication params
+erniebot.api_type = "qianfan"
+erniebot.ak = "APCEKzr4rU8ywqPxzDQn0rCn1"
+erniebot.sk = "5ryzXEhNkk5DT9PeX3jLhZ1w3rsEUktn"
+
+
+# erniebot.ChatCompletion.create(
 
 
 class ErnieBotCompletion(object):
@@ -96,34 +107,6 @@ class ErnieBotCompletion(object):
         stream_resp['choices'][0]['finish_reason'] = 'stop'
         yield stream_resp
 
-        # stream_resp['choices'][0]['finish_reason'] = 'stop'
-        # yield stream_resp
-
-        # stream_resp = stream_resp or json.loads(_chunk.strip('data: \n\n'))  # 只有一行
-
-        # stream_resp['token_usage'] = stream_resp.pop('usage', {})
-        # stream_resp['choices'] = [{"delta": {}, "index": 0, "finish_reason": "stop"}]
-        # yield stream_resp
-
-    @staticmethod
-    @retrying
-    @ttl_cache(ttl=7 * 24 * 3600)
-    def create_url(api_key, secret_key, **kwargs):
-        """
-        使用 API Key，Secret Key 获取access_token，替换下列示例中的应用API Key、应用Secret Key
-        """
-        url = f"https://aip.baidubce.com/oauth/2.0/token?grant_type=client_credentials&client_id={api_key}&client_secret={secret_key}"
-        response = requests.request("POST", url)
-        access_token = response.json().get("access_token")
-
-        if 'ernie-bot' in kwargs.get('model', 'ernie-bot-turbo-0725'):
-            route = 'eb-instant'
-        else:
-            route = 'completions'
-
-        url = f'https://aip.baidubce.com/rpc/2.0/ai_custom/v1/wenxinworkshop/chat/{route}?access_token={access_token}'
-        return url
-
 
 if __name__ == '__main__':
     from meutils.pipe import *
@@ -138,4 +121,3 @@ if __name__ == '__main__':
     print(r)
     for i in r:
         print(i)
-

@@ -11,3 +11,4 @@
 
 from chatllm.llmchain.completions.ernie import ErnieBotCompletion
 from chatllm.llmchain.completions.spark import SparkBotCompletion
+from chatllm.llmchain.completions.chatglm import ChatGLMCompletion

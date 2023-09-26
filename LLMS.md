@@ -12,16 +12,19 @@ for i in qa(query='数据治理简约流程'):
     print(i, end='')
 ```
 
-# Chatglm*
+# Chatglm
 
 ```python
-from meutils.pipe import *
-from chatllm.applications import ChatBase
+import os
 
-qa = ChatBase()
-qa.load_llm(model_name_or_path="THUDM/chatglm2-6b")
-for i in qa(query='数据治理简约流程'):
-    print(i, end='')
+os.environ['CHATGLM_API_KEY'] = "apikey"
+from langchain.chains import LLMChain
+from langchain.prompts import ChatPromptTemplate
+from chatllm.llmchain.llms import ChatGLM
+
+llm = ChatGLM()
+c = LLMChain(llm=llm, prompt=ChatPromptTemplate.from_template("{question}"))
+print(c.run('你是谁'))
 ```
 
 

@@ -33,10 +33,10 @@ class SparkBot(ChatOpenAI):
     @root_validator()
     def validate_environment(cls, values: Dict) -> Dict:
         """Validate that api key and python package exists in environment."""
-        values["ernie_api_key"] = get_from_dict_or_env(
+        # 覆盖 openai_api_key
+        values["openai_api_key"] = get_from_dict_or_env(
             values, "spark_api_key", "SPARK_API_KEY"
         )
-        values["openai_api_key"] = values["ernie_api_key"]  # 覆盖 openai_api_key
 
         values["client"] = SparkBotCompletion
 

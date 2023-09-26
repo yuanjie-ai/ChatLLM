@@ -59,6 +59,7 @@ class ChatFile(object):
             prompt=ChatPromptTemplate.from_template(prompt_template)  # todo: 增加上下文信息
         )
 
+
     def pipeline(self):
         pass
 

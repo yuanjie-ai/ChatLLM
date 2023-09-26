@@ -8,7 +8,9 @@
 # @Software     : PyCharm
 # @Description  :
 
+
+from chatllm.llmchain.applications.chatbase import ChatBase
 from chatllm.llmchain.applications.chatfile import ChatFile
-from chatllm.llmchain.applications.summarizer import Summarizer
 
 from chatllm.llmchain.applications.chatocr import ChatOCR
+from chatllm.llmchain.applications.summarizer import Summarizer

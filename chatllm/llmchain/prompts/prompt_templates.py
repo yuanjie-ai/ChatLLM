@@ -11,7 +11,7 @@
 from langchain.prompts import SystemMessagePromptTemplate, HumanMessagePromptTemplate, ChatPromptTemplate
 
 context_prompt_template = """
-根据以下信息，简洁、专业地回答用户的问题。如果无法得到答案，请回复：“根据已知信息无法回答该问题”或“没有提供足够的信息”。请勿编造信息，答案必须使用中文。
+根据提供的信息，以简洁、专业的方式回答用户的问题。如果无法提供答案，请回复：“根据提供的信息无法回答该问题”或“没有提供足够的信息”。请不要编造信息，答案必须使用中文。
 
 已知信息：
 ```
@@ -21,7 +21,7 @@ context_prompt_template = """
 问题：
 {question}
 
-让我们一步一步思考并回答：
+让我们逐步思考并给出答案：
 """.strip()  # Let's think step by step
 
 summary_prompt_template = """

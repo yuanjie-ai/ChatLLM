@@ -36,10 +36,13 @@ class ChatBase(object):
         close_event_loop()
         yield from async2sync_generator(llm_astream(self.llm.apredict)(prompt))
 
+    async def _achat(self, prompt, **kwargs):
+        await llm_astream(self.llm.apredict)(prompt)
+
 
 if __name__ == '__main__':
     # ChatBase().chat('1+1') | xprint(end='\n')
     ChatBase().achat('周杰伦是谁') | xprint(end='\n')
 
-    # for i in ChatBase().achat('周杰伦是谁'):
+    # for i in ChatBase()._achat('周杰伦是谁'):
     #     print(i, end='')

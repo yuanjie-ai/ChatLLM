@@ -11,5 +11,7 @@
 from chatllm.llmchain.vectorstores.FAISS import FAISS
 from chatllm.llmchain.vectorstores.Milvus import Milvus
 from chatllm.llmchain.vectorstores.Usearch import USearch
-
+from chatllm.llmchain.vectorstores.ElasticsearchStore import ElasticsearchStore
 from chatllm.llmchain.vectorstores.DocArrayInMemorySearch import DocArrayInMemorySearch
+
+from chatllm.llmchain.vectorstores.VectorRecordManager import VectorRecordManager

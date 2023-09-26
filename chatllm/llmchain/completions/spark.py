@@ -138,7 +138,7 @@ class SparkBotCompletion(object):
             },
             "parameter": {
                 "chat": {
-                    "domain": "general",
+                    "domain": "generalv2",  # [general,generalv2]
                     "random_threshold": ws.temperature,
                     "max_tokens": ws.max_tokens or 4096,  # 取值为[1,4096]，默认为2048，模型回答的tokens的最大长度
                     "auditing": "default"
@@ -159,7 +159,9 @@ class SparkBotCompletion(object):
         from datetime import datetime
         from wsgiref.handlers import format_date_time
 
-        gpt_url = "ws://spark-api.xf-yun.com/v1.1/chat"
+        # gpt_url = "ws://spark-api.xf-yun.com/v1.1/chat"
+        gpt_url = "ws://spark-api.xf-yun.com/v2.1/chat"
+
         host = urlparse(gpt_url).netloc
         path = urlparse(gpt_url).path
 
@@ -189,7 +191,7 @@ class SparkBotCompletion(object):
             "host": host
         }
         # 拼接鉴权参数，生成url
-        url = f"ws://spark-api.xf-yun.com/v1.1/chat?{urlencode(v)}"
+        url = f"{gpt_url}?{urlencode(v)}"
         # 此处打印出建立连接时候的url,参考本demo的时候可取消上方打印的注释，比对相同参数时生成的url与自己代码生成的url是否一致
         return url
 
