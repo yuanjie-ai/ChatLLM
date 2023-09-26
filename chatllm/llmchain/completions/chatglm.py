@@ -13,8 +13,6 @@ from meutils.decorators.retry import retrying
 
 from chatllm.schemas.openai_api_protocol import *
 
-requests.post = retrying(requests.post)
-
 
 class ChatGLMCompletion(object):
     @classmethod
@@ -23,8 +21,13 @@ class ChatGLMCompletion(object):
         messages: List[Dict[str, Any]],  # [{'role': 'user', 'content': '讲个故事'}]
         **kwargs,
     ):
-        zhipuai = try_import('zhipuai')
+        try_import('zhipuai')
+        import zhipuai
+        from zhipuai.model_api import api
+
         zhipuai.api_key = kwargs.pop('api_key')
+        api.post = retrying(api.post, predicate=lambda x: x is None)
+        api.stream = retrying(api.stream, predicate=lambda x: x is None)
 
         if kwargs.get('stream'):
             return cls._stream_create(messages, **kwargs)
@@ -33,7 +36,8 @@ class ChatGLMCompletion(object):
 
     @staticmethod
     def _create(messages, **kwargs):
-        zhipuai = try_import('zhipuai')
+        try_import('zhipuai')
+        import zhipuai
         data = zhipuai.model_api.invoke(prompt=messages, **kwargs).get('data', {})
         choices = data.get('choices', [])
         if choices:
@@ -48,7 +52,10 @@ class ChatGLMCompletion(object):
 
     @staticmethod
     def _stream_create(messages, **kwargs):
-        zhipuai = try_import('zhipuai')
+
+        try_import('zhipuai')
+        import zhipuai
+
         resp = zhipuai.model_api.sse_invoke(prompt=messages, **kwargs).events()
 
         finish_reason = None
@@ -79,7 +86,7 @@ if __name__ == '__main__':
 
     r = ChatGLMCompletion.create(
         messages=[{'role': 'user', 'content': '1+1'}],
-        stream=True,
+        stream=False,
         api_key=os.getenv('CHATGLM_API_KEY'),
         model='chatglm_lite'
     )
