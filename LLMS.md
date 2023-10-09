@@ -11,6 +11,20 @@ qa.load_llm(model_name_or_path="chatgpt")
 for i in qa(query='数据治理简约流程'):
     print(i, end='')
 ```
+# [腾讯混元](https://hunyuan.tencent.com)
+```python
+import os
+
+os.environ['HUNYUAN_API_KEY'] = "appid:secret_id:secret_key"
+from langchain.chains import LLMChain
+from langchain.prompts import ChatPromptTemplate
+from chatllm.llmchain.llms import HuanYuan
+
+llm = HuanYuan()
+c = LLMChain(llm=llm, prompt=ChatPromptTemplate.from_template("{question}"))
+print(c.run('你是谁'))
+# 您好！我是腾讯混元大模型，由腾讯公司研发的大型语言模型。我具备丰富的专业领域知识，强大的语义理解能力和逻辑思维能力。我的目标是帮助用户解决问题、提供有用的信息和建议，涵盖文本创作、工作计划、数学计算和聊天对话等领域。若您需要任何帮助，请告诉我，我将尽力满足您的需求。
+```
 
 # Chatglm
 
