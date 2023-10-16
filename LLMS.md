@@ -1,15 +1,17 @@
 # Chatgpt*
+> 计划推出国内 oneapi，支持各种主流大模型，兼容openai客户端生态。
 
 ```python
-from meutils.pipe import *
-from chatllm.applications import ChatBase
+import os
 
-os.environ['API_KEY'] = 'sk-...'
+os.environ['OPEN_API_KEY'] = "sk-..."
+from langchain.chains import LLMChain
+from langchain.prompts import ChatPromptTemplate
+from langchain.chat_models import ChatOpenAI
 
-qa = ChatBase()
-qa.load_llm(model_name_or_path="chatgpt")
-for i in qa(query='数据治理简约流程'):
-    print(i, end='')
+llm = ChatOpenAI()
+c = LLMChain(llm=llm, prompt=ChatPromptTemplate.from_template("{question}"))
+print(c.run('你是谁'))
 ```
 # [腾讯混元](https://hunyuan.tencent.com)
 ```python

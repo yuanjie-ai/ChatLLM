@@ -6,6 +6,14 @@
 <img src="data/imgs/LLM.drawio.png"/>
 </div>
 
+## [ChatLLM API 分发系统上线](https://api.chatllm.vip/)
+
+<details markdown="1">
+  <summary>Click to Star⭐️免费领取tokens</summary>
+    https://api.chatllm.vip/
+
+</details>
+
 ## Install
 
 ```shell
@@ -17,6 +25,7 @@ pip install -U chatllm
 ## Usages
 
 ### [目前适配的LLMs](LLMS.md)
+> 计划推出国内 oneapi，支持各种主流大模型，兼容openai客户端生态。
 
 ```python
 from chatllm.applications import ChatBase
