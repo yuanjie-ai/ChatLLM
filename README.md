@@ -8,6 +8,7 @@
 
 ![image](https://github.com/yuanjie-ai/ChatLLM/assets/20265321/90890ea5-e92d-46c8-a600-a32e33eb4fc3)
 
+## todo: SimpleGraphRAG
 
 ## [ChatLLM API 分发系统上线](https://api.chatllm.vip/)
 
