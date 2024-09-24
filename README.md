@@ -3,6 +3,8 @@
 <h1 align = "center">🔥ChatLLM 基于知识库🔥</h1>
 
 > star之后可联系wx: 313303303领取1000w tokens（国产模型）
+> star之后可联系wx: 313303303领取1000w tokens（国产模型）
+> star之后可联系wx: 313303303领取1000w tokens（国产模型）
 
 <div align=center>
 <img src="data/imgs/LLM.drawio.png"/>
