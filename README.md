@@ -6,6 +6,8 @@
 <img src="data/imgs/LLM.drawio.png"/>
 </div>
 
+> star之后可联系313303303领取1000w tokens（国产模型）
+
 ![image](https://github.com/yuanjie-ai/ChatLLM/assets/20265321/90890ea5-e92d-46c8-a600-a32e33eb4fc3)
 
 ## todo: SimpleGraphRAG
